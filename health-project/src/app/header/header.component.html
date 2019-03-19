@@ -1,0 +1,22 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a routerLink="/" class="navbar-brand">Super Health</a>
+    </div>
+    <div class="navbar-default">
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active">
+          <a routerLink="/patients">Patients</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li routerLinkActive="active" *ngIf="authService.token == null">
+          <a routerLink="/login">Login</a>
+        </li>
+        <li routerLinkActive="active" *ngIf="authService.token != null">
+          <a routerLink="/login" (click)="onLogout()">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

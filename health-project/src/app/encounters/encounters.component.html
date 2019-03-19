@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-xs-12">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Patient Id</th>
+          <th>Visit Code</th>
+          <th>Billing Code</th>
+          <th>Icd 10</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let encounter of encounters"
+          style="cursor: pointer;"
+          (click)="onRowClick(encounter.encounterId)"
+        >
+          <td>{{ encounter.encounterId }}</td>
+          <td>{{ encounter.patientId }}</td>
+          <td>{{ encounter.visitCode }}</td>
+          <td>{{ encounter.billingCode }}</td>
+          <td>{{ encounter.icd }}</td>
+          <td>{{ encounter.date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <h1>Super Health Patients</h1>
+    </div>
+  </div>
+  <div class="col-xs-12 text-center">
+    <button type="button" class="btn btn-primary" routerLink="/add-patient">
+      Create Patient
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Height</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let patient of patients"
+            style="cursor: pointer;"
+            (click)="onRowClick(patient.patientId)"
+          >
+            <td>{{ patient.patientId }}</td>
+            <td>{{ patient.firstName }}</td>
+            <td>{{ patient.lastName }}</td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.height }}</td>
+            <td>{{ patient.weight }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

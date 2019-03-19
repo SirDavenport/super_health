@@ -1,0 +1,39 @@
+<div class="container-fluid" *ngIf="patient != undefined">
+  <div *ngIf="error != null">Errors: {{ error }}</div>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <h1>Patient: {{ patient.firstName + " " + patient.lastName }}</h1>
+      <h5>Weight: {{ patient.weight }}</h5>
+      <h5>Age: {{ patient.age }}</h5>
+      <h5>Height: {{ patient.height }}</h5>
+      <h4>Address:</h4>
+      {{ patient.address.street }}
+      {{ patient.address.city }}
+      {{ patient.address.state }}
+      {{ patient.address.postal }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="btn-toolbar text-center">
+        <button class="btn btn-warning" type="button" [routerLink]="['edit']">
+          Edit
+        </button>
+        <button class="btn btn-danger" type="button" (click)="onDelete()">
+          Delete
+        </button>
+        <button
+          class="btn btn-success"
+          type="button"
+          (click)="onViewEncounters()"
+        >
+          Encounters
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-encounters
+    *ngIf="encounters != null"
+    [encounters]="encounters"
+  ></app-encounters>
+</div>

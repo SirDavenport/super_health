@@ -1,0 +1,36 @@
+<div class="container-fluid" *ngIf="encounter != null">
+  <div *ngIf="error != null">Errors: {{ error }}</div>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <h1>Encounter: {{ encounter.encounterId }}</h1>
+      <h5>Patient Id: {{ encounter.patientId }}</h5>
+      <h5>Visit Code: {{ encounter.visitCode }}</h5>
+      <h5>Provider: {{ encounter.provider }}</h5>
+      <h5>ICD10: {{ encounter.icd }}</h5>
+      <h5>Total Cost: {{ encounter.totalCost }}</h5>
+      <h5>Copay: {{ encounter.copay }}</h5>
+      <h5>Chief Complaint: {{ encounter.chiefComplaint }}</h5>
+      <h5>Pulse: {{ encounter.pulse }}</h5>
+      <h5>Systolic: {{ encounter.systolic }}</h5>
+      <h5>Diastolic: {{ encounter.diastolic }}</h5>
+      <h5>Date: {{ encounter.date }}</h5>
+      <h3>Notes:</h3>
+      <p>{{ encounter.notes }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="btn-toolbar text-center">
+        <button class="btn btn-warning" type="button" [routerLink]="['edit']">
+          Edit
+        </button>
+        <button class="btn btn-danger" type="button" (click)="onDelete()">
+          Delete
+        </button>
+        <button class="btn btn-danger" type="button" (click)="onBack()">
+          Back To Patient
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

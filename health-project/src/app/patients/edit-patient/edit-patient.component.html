@@ -1,0 +1,71 @@
+<div *ngIf="error != null">Errors: {{ error }}</div>
+<div class="row" *ngIf="patient != undefined">
+  <div class="col-xs-12 col-sm-10 col-md-6 col-sm-offset-1 col-md-offset-3">
+    <form
+      [formGroup]="patientForm"
+      (ngSubmit)="onUpdate()"
+      *ngIf="patientForm != null"
+    >
+      <div class="form-group">
+        <label for="firstName">First name</label>
+        <input type="text" class="form-control" formControlName="firstName" />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input type="text" class="form-control" formControlName="lastName" />
+      </div>
+      <div class="form-group">
+        <label for="ssn">SSN</label>
+        <input type="text" class="form-control" formControlName="ssn" />
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <input type="text" class="form-control" formControlName="gender" />
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="text" class="form-control" formControlName="age" />
+      </div>
+      <div class="form-group">
+        <label for="height">Height</label>
+        <input type="text" class="form-control" formControlName="height" />
+      </div>
+      <div class="form-group">
+        <label for="weight">Weight</label>
+        <input type="text" class="form-control" formControlName="weight" />
+      </div>
+      <div class="form-group">
+        <label for="insurance">Insurance</label>
+        <input type="text" class="form-control" formControlName="insurance" />
+      </div>
+      <div formGroupName="address">
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input type="text" class="form-control" formControlName="street" />
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" class="form-control" formControlName="city" />
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" class="form-control" formControlName="state" />
+        </div>
+        <div class="form-group">
+          <label for="postal">Postal Code</label>
+          <input type="text" class="form-control" formControlName="postal" />
+        </div>
+      </div>
+      <button
+        [disabled]="patientForm.invalid"
+        class="btn btn-primary"
+        type="submit"
+      >
+        Update Patient
+      </button>
+      <button routerLink="../" class="btn btn-warning" type="button">
+        Cancel
+      </button>
+    </form>
+  </div>
+</div>
