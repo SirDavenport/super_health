@@ -21,6 +21,7 @@ import { EncounterDetailComponent } from "./encounters/encounter-detail/encounte
 import { EncounterGuard } from "./encounters/encounter-guard.service";
 import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encounter.component";
 import { AdminGuard } from "./auth/admin-guard.service";
+import { PatientSearchPipe } from './patients/patient-search.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AdminGuard } from "./auth/admin-guard.service";
     EditPatientComponent,
     NotFoundComponent,
     EncounterDetailComponent,
-    EditEncounterComponent
+    EditEncounterComponent,
+    PatientSearchPipe
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,19 @@ export class PatientsComponent implements OnInit, OnDestroy {
   patients: Patient[];
   patientsObservable: Observable<any>;
   sub: Subscription;
+  filter = "";
+  searchSelect = "firstName";
+  propNames = [
+    { key: "patientId", visual: "Patient Id" },
+    { key: "firstName", visual: "First Name" },
+    { key: "lastName", visual: "Last Name" },
+    { key: "age", visual: "Age" },
+    { key: "height", visual: "Height" },
+    { key: "weight", visual: "Weight" },
+    { key: "gender", visual: "Gender" },
+    { key: "insurance", visual: "Insurance" }
+  ];
+
   constructor(
     private router: Router,
     private patientService: PatientsService

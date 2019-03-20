@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="patients != null">
   <div class="row">
     <div class="col-xs-12 text-center">
       <h1>Super Health Patients</h1>
@@ -8,6 +8,28 @@
     <button type="button" class="btn btn-primary" routerLink="/add-patient">
       Create Patient
     </button>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="form-group">
+        <label for="searchSelect">Search By</label>
+        <select
+          name="searchSelect"
+          [(ngModel)]="searchSelect"
+          class="form-control"
+        >
+          <option *ngFor="let propName of propNames" [value]="propName.key">{{
+            propName.visual
+          }}</option>
+        </select>
+      </div>
+      <p>Here: {{ searchSelect }}</p>
+      <div class="form-group">
+        <label for="search">Search</label>
+        <input class="form-control" type="text" [(ngModel)]="filter" />
+      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -24,7 +46,9 @@
         </thead>
         <tbody>
           <tr
-            *ngFor="let patient of patients"
+            *ngFor="
+              let patient of (patients | patientSearch: filter:searchSelect)
+            "
             style="cursor: pointer;"
             (click)="onRowClick(patient.patientId)"
           >
