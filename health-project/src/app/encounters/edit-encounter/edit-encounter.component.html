@@ -65,29 +65,27 @@
             rows="6"
           ></textarea>
         </div>
-        <div class="row">
-          <div class="col-xs-4 col-xs-offset-4">
-            <div class="btn-toolbar">
-              <button
-                *ngIf="editMode"
-                [disabled]="encounterForm.invalid"
-                class="btn btn-success"
-                type="submit"
-              >
-                Update
-              </button>
-              <button
-                *ngIf="!editMode"
-                [disabled]="encounterForm.invalid"
-                class="btn btn-success"
-                type="submit"
-              >
-                Create
-              </button>
-              <button class="btn btn-danger" type="button" routerLink="../">
-                Cancel
-              </button>
-            </div>
+        <div class="row text-center">
+          <div class="col-xs-12">
+            <button
+              *ngIf="editMode"
+              [disabled]="encounterForm.invalid"
+              class="btn btn-success"
+              type="submit"
+            >
+              Update
+            </button>
+            <button
+              *ngIf="!editMode"
+              [disabled]="encounterForm.invalid"
+              class="btn btn-success"
+              type="submit"
+            >
+              Create
+            </button>
+            <button class="btn btn-danger" type="button" routerLink="../">
+              Cancel
+            </button>
           </div>
         </div>
       </form>

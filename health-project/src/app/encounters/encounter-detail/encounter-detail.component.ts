@@ -36,4 +36,8 @@ export class EncounterDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.encounterSub.unsubscribe();
   }
+
+  onDelete() {
+    console.log("Cannot delete");
+  }
 }

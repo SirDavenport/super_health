@@ -58,25 +58,29 @@
           <input type="text" class="form-control" formControlName="postal" />
         </div>
       </div>
-      <button
-        *ngIf="editMode"
-        [disabled]="patientForm.invalid"
-        class="btn btn-primary"
-        type="submit"
-      >
-        Update Patient
-      </button>
-      <button
-        *ngIf="!editMode"
-        [disabled]="patientForm.invalid"
-        class="btn btn-primary"
-        type="submit"
-      >
-        Create Patient
-      </button>
-      <button routerLink="../" class="btn btn-warning" type="button">
-        Cancel
-      </button>
+      <div class="row text-center">
+        <div class="col-xs-12">
+          <button
+            *ngIf="editMode"
+            [disabled]="patientForm.invalid"
+            class="btn btn-primary"
+            type="submit"
+          >
+            Update Patient
+          </button>
+          <button
+            *ngIf="!editMode"
+            [disabled]="patientForm.invalid"
+            class="btn btn-primary"
+            type="submit"
+          >
+            Create Patient
+          </button>
+          <button routerLink="../" class="btn btn-warning" type="button">
+            Cancel
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </div>
