@@ -20,6 +20,7 @@ export class AuthService {
         (response: string[]) => {
           if (response.length > 1) {
             this.token = response[0];
+            this.roles = response;
             this.router.navigate(["/patients"]);
           } else {
             this.loginError.next("Email or Password are incorrect...");

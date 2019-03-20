@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Encounter } from "./encounter.model";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
-
+const host = "http://localhost:8080/encounters/";
 @Injectable()
 export class EncounterService {
   constructor(
@@ -18,17 +18,16 @@ export class EncounterService {
   encountersChanged = new Subject<Encounter[]>();
   getEncountersByPatientApi(patientId: string) {
     this.httpClient
-      .get("http://localhost:8080/encounters/patient/" + patientId, {
+      .get(host + "patient/" + patientId, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe((response: Encounter[]) => {
-        console.log(response);
         this.encountersChanged.next(response);
       });
   }
   getEncounterById(id: string) {
     this.httpClient
-      .get("http://localhost:8080/encounters/" + id, {
+      .get(host + id, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe((response: Encounter) => {
@@ -37,13 +36,9 @@ export class EncounterService {
   }
   updateEncounter(encounter: Encounter) {
     this.httpClient
-      .put(
-        "http://localhost:8080/encounters/" + encounter.encounterId,
-        encounter,
-        {
-          headers: new HttpHeaders().set("jwt", this.authService.token)
-        }
-      )
+      .put(host + encounter.encounterId, encounter, {
+        headers: new HttpHeaders().set("jwt", this.authService.token)
+      })
       .subscribe(response => {
         if (response[0] === "Successfully updated encounter") {
           this.router.navigate(["encounter-detail", encounter.encounterId]);
@@ -54,7 +49,7 @@ export class EncounterService {
   }
   addEncounter(encounter: Encounter) {
     this.httpClient
-      .post("http://localhost:8080/encounters", encounter, {
+      .post(host, encounter, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe(response => {

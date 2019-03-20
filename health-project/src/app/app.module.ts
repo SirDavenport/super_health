@@ -20,6 +20,7 @@ import { EncounterService } from "./encounters/encounter.service";
 import { EncounterDetailComponent } from "./encounters/encounter-detail/encounter-detail.component";
 import { EncounterGuard } from "./encounters/encounter-guard.service";
 import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encounter.component";
+import { AdminGuard } from "./auth/admin-guard.service";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encount
     PatientGuard,
     AuthService,
     EncounterService,
-    EncounterGuard
+    EncounterGuard,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })

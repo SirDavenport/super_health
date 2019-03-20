@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
-
+const host = "http://localhost:8080/patients/";
 @Injectable()
 export class PatientsService {
   patientsChanged = new Subject<Patient[]>();
@@ -19,7 +19,7 @@ export class PatientsService {
 
   getPatientsApi() {
     this.httpClient
-      .get("http://localhost:8080/patients", {
+      .get(host, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe((response: Patient[]) => {
@@ -28,7 +28,7 @@ export class PatientsService {
   }
   addPatient(patient: Patient) {
     this.httpClient
-      .post("http://localhost:8080/patients", patient, {
+      .post(host, patient, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe((response: string) => {
@@ -42,7 +42,7 @@ export class PatientsService {
 
   updatePatient(patient: Patient, id: string) {
     this.httpClient
-      .put("http://localhost:8080/patients/" + id, patient, {
+      .put(host + id, patient, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe(response => {
@@ -56,7 +56,7 @@ export class PatientsService {
 
   getPatientApi(id: string) {
     this.httpClient
-      .get("http://localhost:8080/patients/" + id, {
+      .get(host + id, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe(
@@ -70,7 +70,7 @@ export class PatientsService {
   }
   deletePatientApi(id: string) {
     this.httpClient
-      .delete("http://localhost:8080/patients/" + id, {
+      .delete(host + id, {
         headers: new HttpHeaders().set("jwt", this.authService.token)
       })
       .subscribe(response => {
