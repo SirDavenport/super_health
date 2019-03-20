@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Patient } from "./patient.model";
-import { Address } from "./address.model";
 import { Router } from "@angular/router";
 import { PatientsService } from "./patients.service";
 import { Subscription, Observable } from "rxjs";
