@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 export class AuthService {
   token: string;
   roles: string[];
+  loginError = new Subject<any>();
   constructor(private httpClient: HttpClient, private router: Router) {}
 
   login(email: string, password: string) {
@@ -15,10 +16,19 @@ export class AuthService {
         email: email,
         password: password
       })
-      .subscribe((response: string[]) => {
-        this.token = response[0];
-        this.router.navigate(["/patients"]);
-      });
+      .subscribe(
+        (response: string[]) => {
+          if (response.length > 1) {
+            this.token = response[0];
+            this.router.navigate(["/patients"]);
+          } else {
+            this.loginError.next("Email or Password are incorrect...");
+          }
+        },
+        error => {
+          this.loginError.next("Something went wrong...");
+        }
+      );
   }
   logout() {
     this.token = null;

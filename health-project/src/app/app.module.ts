@@ -7,7 +7,6 @@ import { PatientsComponent } from "./patients/patients.component";
 import { EncountersComponent } from "./encounters/encounters.component";
 import { PatientsService } from "./patients/patients.service";
 import { HttpClientModule } from "@angular/common/http";
-import { AddPatientComponent } from "./patients/add-patient/add-patient.component";
 import { PatientDetailComponent } from "./patients/patient-detail/patient-detail.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { LoginComponent } from "./auth/login/login.component";
@@ -20,6 +19,7 @@ import { AuthService } from "./auth/auth.service";
 import { EncounterService } from "./encounters/encounter.service";
 import { EncounterDetailComponent } from "./encounters/encounter-detail/encounter-detail.component";
 import { EncounterGuard } from "./encounters/encounter-guard.service";
+import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encounter.component";
 
 @NgModule({
   declarations: [
@@ -27,14 +27,14 @@ import { EncounterGuard } from "./encounters/encounter-guard.service";
     HeaderComponent,
     PatientsComponent,
     EncountersComponent,
-    AddPatientComponent,
     PatientDetailComponent,
     LoginComponent,
     SignupComponent,
     PatientComponent,
     EditPatientComponent,
     NotFoundComponent,
-    EncounterDetailComponent
+    EncounterDetailComponent,
+    EditEncounterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Encounter } from "./encounter.model";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute, Params } from "@angular/router";
 
 @Component({
   selector: "app-encounters",
@@ -9,9 +9,14 @@ import { Router } from "@angular/router";
 })
 export class EncountersComponent implements OnInit {
   @Input() encounters: Encounter[];
-  constructor(private router: Router) {}
+  patientId: string;
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      this.patientId = params["patientId"];
+    });
+  }
 
   onRowClick(id: string) {
     this.router.navigate(["/encounter-detail", id]);

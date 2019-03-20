@@ -10,6 +10,7 @@ import { NotFoundComponent } from "./not-found/not-found.component";
 import { AddPatientComponent } from "./patients/add-patient/add-patient.component";
 import { EncounterDetailComponent } from "./encounters/encounter-detail/encounter-detail.component";
 import { EncounterGuard } from "./encounters/encounter-guard.service";
+import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encounter.component";
 const appRoutes: Routes = [
   { path: "", redirectTo: "/patients", pathMatch: "full" },
   {
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
   },
   {
     path: "add-patient",
-    component: AddPatientComponent,
+    component: EditPatientComponent,
     pathMatch: "full",
     canActivate: [PatientGuard]
   },
@@ -41,6 +42,16 @@ const appRoutes: Routes = [
   {
     path: "encounter-detail/:encounterId",
     component: EncounterDetailComponent,
+    canActivate: [EncounterGuard]
+  },
+  {
+    path: "encounter-detail/:encounterId/edit",
+    component: EditEncounterComponent,
+    canActivate: [EncounterGuard]
+  },
+  {
+    path: "patient-detail/:patientId/add-encounter",
+    component: EditEncounterComponent,
     canActivate: [EncounterGuard]
   },
   { path: "**", component: NotFoundComponent }

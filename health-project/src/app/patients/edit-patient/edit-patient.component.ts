@@ -4,6 +4,8 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { PatientsService } from "../patients.service";
 import { Patient } from "../patient.model";
 import { Subscription } from "rxjs";
+import { validateConfig } from "@angular/router/src/config";
+import { Address } from "../address.model";
 
 @Component({
   selector: "app-edit-patient",
@@ -14,9 +16,21 @@ export class EditPatientComponent implements OnInit {
   patientForm: FormGroup;
   sub: Subscription;
   id: string;
-  patient: Patient;
+  patient: Patient = new Patient(
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    new Address(null, null, null, null)
+  );
   error: any[];
   errorSub: Subscription;
+  editMode = false;
   constructor(
     private route: ActivatedRoute,
     private patientService: PatientsService
@@ -25,11 +39,16 @@ export class EditPatientComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params["patientId"];
-      this.patientService.getPatientApi(this.id);
+      if (this.id != undefined) {
+        this.editMode = true;
+        this.patientService.getPatientApi(this.id);
+      } else {
+        this.initForm();
+      }
     });
     this.sub = this.patientService.patientChanged.subscribe(response => {
       this.patient = response;
-      if (this.patient != null) {
+      if (this.patient != null && this.editMode) {
         this.initForm();
       }
     });
@@ -40,10 +59,22 @@ export class EditPatientComponent implements OnInit {
 
   private initForm() {
     this.patientForm = new FormGroup({
-      firstName: new FormControl(this.patient.firstName, Validators.required),
-      lastName: new FormControl(this.patient.lastName, Validators.required),
-      ssn: new FormControl(this.patient.ssn, Validators.required),
-      gender: new FormControl(this.patient.gender, Validators.required),
+      firstName: new FormControl(this.patient.firstName, [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z]{2,30}$/)
+      ]),
+      lastName: new FormControl(this.patient.lastName, [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z]{2,30}$/)
+      ]),
+      ssn: new FormControl(this.patient.ssn, [
+        Validators.required,
+        Validators.pattern(/^\d{3}-?\d{2}-?\d{4}$/)
+      ]),
+      gender: new FormControl(this.patient.gender, [
+        Validators.required,
+        Validators.pattern(/^(?:male|Male|female|Female)$/)
+      ]),
       age: new FormControl(this.patient.age, [
         Validators.required,
         Validators.pattern(/^[1-9]+[0-9]*$/)
@@ -58,24 +89,39 @@ export class EditPatientComponent implements OnInit {
       ]),
       insurance: new FormControl(this.patient.insurance, Validators.required),
       address: new FormGroup({
-        street: new FormControl(
-          this.patient.address.street,
-          Validators.required
-        ),
-        city: new FormControl(this.patient.address.city, Validators.required),
-        state: new FormControl(this.patient.address.state, Validators.required),
-        postal: new FormControl(
-          this.patient.address.postal,
-          Validators.required
-        )
+        street: new FormControl(this.patient.address.street, [
+          Validators.required,
+          Validators.pattern(/^\w+(\s\w+){1,}$/)
+        ]),
+        city: new FormControl(this.patient.address.city, [
+          Validators.required,
+          Validators.pattern(/^[A-Za-z\s]{4,30}$/)
+        ]),
+        state: new FormControl(this.patient.address.state, [
+          Validators.required,
+          Validators.pattern(
+            /^(?:(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|P[AR]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY]))$/
+          )
+        ]),
+        postal: new FormControl(this.patient.address.postal, [
+          Validators.required,
+          Validators.pattern(/(^\d{5}$)|(^\d{5}-\d{4}$)/)
+        ])
       })
     });
   }
-  onUpdate() {
+  onSubmit() {
     let patient: Patient;
-    if (this.patientForm.valid) {
-      patient = this.patientForm.value;
-      this.patientService.updatePatient(patient, this.id);
+    if (this.editMode) {
+      if (this.patientForm.valid) {
+        patient = this.patientForm.value;
+        this.patientService.updatePatient(patient, this.id);
+      }
+    } else {
+      if (this.patientForm.valid) {
+        patient = this.patientForm.value;
+        this.patientService.addPatient(patient);
+      }
     }
   }
 }
