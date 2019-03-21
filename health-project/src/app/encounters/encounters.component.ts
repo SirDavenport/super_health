@@ -10,6 +10,15 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 export class EncountersComponent implements OnInit {
   @Input() encounters: Encounter[];
   patientId: string;
+  filter = "";
+  searchSelect = "firstName";
+  propNames = [
+    { key: "visitCode", visual: "Visit Code" },
+    { key: "billingCode", visual: "Billing Code" },
+    { key: "icd", visual: "ICD 10" },
+    { key: "encounterId", visual: "Encounter Id" },
+    { key: "date", visual: "Date" }
+  ];
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {

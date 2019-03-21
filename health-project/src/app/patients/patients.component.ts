@@ -21,9 +21,7 @@ export class PatientsComponent implements OnInit, OnDestroy {
     { key: "lastName", visual: "Last Name" },
     { key: "age", visual: "Age" },
     { key: "height", visual: "Height" },
-    { key: "weight", visual: "Weight" },
-    { key: "gender", visual: "Gender" },
-    { key: "insurance", visual: "Insurance" }
+    { key: "weight", visual: "Weight" }
   ];
 
   constructor(
