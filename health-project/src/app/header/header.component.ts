@@ -7,10 +7,11 @@ import { Subscription } from "rxjs";
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.css"]
 })
+//Handles the nav bar
 export class HeaderComponent {
-  token: string;
   constructor(private authService: AuthService) {}
 
+  //Calls logout service from authService.
   onLogout() {
     this.authService.logout();
   }

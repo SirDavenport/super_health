@@ -10,6 +10,7 @@ import { Subscription } from "rxjs";
   templateUrl: "./edit-encounter.component.html",
   styleUrls: ["./edit-encounter.component.css"]
 })
+//Component dealing with editing or adding an encounter.
 export class EditEncounterComponent implements OnInit, OnDestroy {
   encounterForm: FormGroup;
   id: string;
@@ -39,6 +40,13 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {}
 
+  //Subscribes to route params. Sets id to the param, encounterId.
+  //Sets patientId to the param patientId.
+  //If this.id is not undefined, then we set edit mode to true and
+  //make a call to the encounterService to get encounter by id.
+  //Otherwise we set the encounter's patientId to this.patientId
+  //and call initForm().
+  //We subscribe to the encounterChange and errorChanged subjects in encounterService
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params["encounterId"];
@@ -51,6 +59,7 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
         this.initForm();
       }
     });
+    //When the encounter is not null, call initForm
     this.encounterSub = this.encounterService.encounterChanged.subscribe(
       response => {
         this.encounter = response;
@@ -64,6 +73,12 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
     });
   }
 
+  /*
+    Create a new form group with formControls for each encounter.
+    Each formControl has specific pattern validation.
+    We call this later in the params subscription for adding an encounter,
+    or in the encounterSub for editing an encounter.
+  */
   private initForm() {
     this.encounterForm = new FormGroup({
       encounterId: new FormControl(this.encounter.encounterId),
@@ -113,6 +128,11 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
     });
   }
 
+  /*
+    If editMode is true, calls updateEncounter from encounterService
+    Else, calls addEncounter from encounterService
+    Passes the values from the form. 
+  */
   onSubmit() {
     if (this.editMode) {
       this.encounterService.updateEncounter(this.encounterForm.value);
@@ -121,6 +141,7 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
     }
   }
 
+  //Unsubscripes from subscriptions
   ngOnDestroy() {
     this.encounterSub.unsubscribe();
     this.errorSub.unsubscribe();

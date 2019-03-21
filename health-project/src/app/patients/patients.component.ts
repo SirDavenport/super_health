@@ -9,6 +9,9 @@ import { Subscription, Observable } from "rxjs";
   templateUrl: "./patients.component.html",
   styleUrls: ["./patients.component.css"]
 })
+/**
+ * Handles the main patients component.
+ */
 export class PatientsComponent implements OnInit, OnDestroy {
   patients: Patient[];
   patientsObservable: Observable<any>;
@@ -29,6 +32,11 @@ export class PatientsComponent implements OnInit, OnDestroy {
     private patientService: PatientsService
   ) {}
 
+  /**
+   * Calls getPatientsApi from patientService.
+   * Subscribes to patientsChanged from patientService and
+   * sets this.patients to what is returned from patientsChanged.
+   */
   ngOnInit() {
     this.patientService.getPatientsApi();
     this.sub = this.patientService.patientsChanged.subscribe(
@@ -38,10 +46,15 @@ export class PatientsComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Navigates to patient-detail page.
+   * @param id
+   */
   onRowClick(id: string) {
     this.router.navigate(["/patient-detail", id]);
   }
 
+  //Unsubscribes
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

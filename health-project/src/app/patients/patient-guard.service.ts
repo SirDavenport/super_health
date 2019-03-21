@@ -10,6 +10,7 @@ import { PatientsService } from "./patients.service";
 import { AuthService } from "../auth/auth.service";
 
 @Injectable()
+//Make sure logged in before viewing certain pages, otherwise redirect to login.
 export class PatientGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

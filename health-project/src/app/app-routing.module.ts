@@ -10,6 +10,7 @@ import { EncounterDetailComponent } from "./encounters/encounter-detail/encounte
 import { EncounterGuard } from "./encounters/encounter-guard.service";
 import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encounter.component";
 import { AdminGuard } from "./auth/admin-guard.service";
+//All of the routes for the app
 const appRoutes: Routes = [
   { path: "", redirectTo: "/patients", pathMatch: "full" },
   {

@@ -27,6 +27,13 @@ export class EncountersComponent implements OnInit {
     private encounterService: EncounterService
   ) {}
 
+  /**
+   * Subscribes to route params
+   * Sets patientId to the param passed
+   * Calls getEncountersByPatientApi from encounterService.
+   * Subscribes to the encountersChanged subject from encounterService
+   * Sets this.encounters to whats returned.
+   */
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.patientId = params["patientId"];
@@ -39,6 +46,7 @@ export class EncountersComponent implements OnInit {
     );
   }
 
+  //When the row of the table is clicked, navigate to the encounter detail.
   onRowClick(id: string) {
     this.router.navigate(["/encounter-detail", id]);
   }

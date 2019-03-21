@@ -1,5 +1,6 @@
 import { Address } from "./address.model";
 
+//Patient Model.
 export class Patient {
   constructor(
     public patientId: string,

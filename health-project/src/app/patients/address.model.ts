@@ -1,3 +1,4 @@
+//Address model
 export class Address {
   constructor(
     public street: string,

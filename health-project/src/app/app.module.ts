@@ -11,7 +11,6 @@ import { PatientDetailComponent } from "./patients/patient-detail/patient-detail
 import { AppRoutingModule } from "./app-routing.module";
 import { LoginComponent } from "./auth/login/login.component";
 import { SignupComponent } from "./auth/signup/signup.component";
-import { PatientComponent } from "./patients/patient/patient.component";
 import { EditPatientComponent } from "./patients/edit-patient/edit-patient.component";
 import { PatientGuard } from "./patients/patient-guard.service";
 import { NotFoundComponent } from "./not-found/not-found.component";
@@ -21,7 +20,7 @@ import { EncounterDetailComponent } from "./encounters/encounter-detail/encounte
 import { EncounterGuard } from "./encounters/encounter-guard.service";
 import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encounter.component";
 import { AdminGuard } from "./auth/admin-guard.service";
-import { PatientSearchPipe } from './patients/patient-search.pipe';
+import { PatientSearchPipe } from "./patients/patient-search.pipe";
 
 @NgModule({
   declarations: [
@@ -32,7 +31,6 @@ import { PatientSearchPipe } from './patients/patient-search.pipe';
     PatientDetailComponent,
     LoginComponent,
     SignupComponent,
-    PatientComponent,
     EditPatientComponent,
     NotFoundComponent,
     EncounterDetailComponent,

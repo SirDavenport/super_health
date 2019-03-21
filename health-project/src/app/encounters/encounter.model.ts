@@ -1,3 +1,4 @@
+//Encounter Model.
 export class Encounter {
   constructor(
     public encounterId: string,

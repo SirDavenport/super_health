@@ -19,6 +19,11 @@ export class EncounterDetailComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
+  /*
+    Subscribes to encounterChanged from encounterService
+    Sets this.encounter equal to what is returned from the subscription.
+    Subscribes to route params. Sets the encounterId and then calls getEncounterById
+  */
   ngOnInit() {
     this.encounterSub = this.encounterService.encounterChanged.subscribe(
       response => {
@@ -30,13 +35,16 @@ export class EncounterDetailComponent implements OnInit, OnDestroy {
       this.encounterService.getEncounterById(this.id);
     });
   }
+  //Navigates back to patient-detail of the patient who's encounter we are trying to update.
   onBack() {
     this.router.navigate(["patient-detail", this.encounter.patientId]);
   }
+  //Unsubscribes
   ngOnDestroy() {
     this.encounterSub.unsubscribe();
   }
 
+  //Placeholder if I ever want add delete encounter.
   onDelete() {
     console.log("Cannot delete");
   }

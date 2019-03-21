@@ -13,15 +13,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   errorSub: Subscription;
   constructor(private authService: AuthService) {}
 
+  //Subscribes to loginError from authService
   ngOnInit() {
     this.errorSub = this.authService.loginError.subscribe(response => {
       this.error = response;
     });
   }
+  //calls login from authService
   onSubmit(form: NgForm) {
     this.authService.login(form.value.email, form.value.password);
   }
 
+  //Unsubscribes
   ngOnDestroy() {
     this.errorSub.unsubscribe();
   }

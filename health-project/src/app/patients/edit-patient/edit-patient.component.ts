@@ -36,6 +36,11 @@ export class EditPatientComponent implements OnInit {
     private patientService: PatientsService
   ) {}
 
+  //Sets id to the param patientId.
+  //If this.id is not undefined, then we set edit mode to true and
+  //make a call to the patientService to get patient by id.
+  //Else, call initForm().
+  //We subscribe to the patientChange and errorChanged subjects in patientService
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params["patientId"];
@@ -46,6 +51,7 @@ export class EditPatientComponent implements OnInit {
         this.initForm();
       }
     });
+    //If patient is not null, we call initForm
     this.sub = this.patientService.patientChanged.subscribe(response => {
       this.patient = response;
       if (this.patient != null && this.editMode) {
@@ -56,7 +62,12 @@ export class EditPatientComponent implements OnInit {
       this.error = response;
     });
   }
-
+  /*
+    Create a new form group with formControls for each patient.
+    Each formControl has specific pattern validation.
+    We call this later in the params subscription for adding a patient,
+    or in the patientSub for editing an patient.
+  */
   private initForm() {
     this.patientForm = new FormGroup({
       firstName: new FormControl(this.patient.firstName, [
@@ -110,6 +121,11 @@ export class EditPatientComponent implements OnInit {
       })
     });
   }
+  /*
+    If editMode is true, we check for validity and then
+    call updatePatient from patientService while passing the patient and id.
+    Otherwise we do that, but call addPatient.
+  */
   onSubmit() {
     let patient: Patient;
     if (this.editMode) {

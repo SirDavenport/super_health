@@ -7,6 +7,7 @@ import { AuthService } from "../auth/auth.service";
 import { Router } from "@angular/router";
 const host = "http://localhost:8080/patients/";
 @Injectable()
+//Handles all the patient api calls.
 export class PatientsService {
   patientsChanged = new Subject<Patient[]>();
   patientChanged = new Subject<Patient>();
@@ -17,6 +18,10 @@ export class PatientsService {
     private router: Router
   ) {}
 
+  /**
+   * Get all patients from backend
+   * Calls next on patientChanged subject
+   */
   getPatientsApi() {
     this.httpClient
       .get(host, {
@@ -26,6 +31,12 @@ export class PatientsService {
         this.patientsChanged.next(response);
       });
   }
+  /**
+   * Call api to add patient.
+   * if the first element of the response is "Successfully added new patient",
+   * then navigate to patients page. Otherwise call next on errorChanged subject
+   * @param patient
+   */
   addPatient(patient: Patient) {
     this.httpClient
       .post(host, patient, {
@@ -39,7 +50,12 @@ export class PatientsService {
         }
       });
   }
-
+  /**
+   * Call api to update patient.
+   * if the first element of the response is "Successfully updated patient",
+   * then navigate to patient-detail page. Otherwise call next on errorChanged subject
+   * @param patient
+   */
   updatePatient(patient: Patient, id: string) {
     this.httpClient
       .put(host + id, patient, {
@@ -53,7 +69,12 @@ export class PatientsService {
         }
       });
   }
-
+  /**
+   * Call api to get patient by id.
+   * If successful, call next on patientsChanged subject,
+   * if error, call next on errorChanged subject.
+   * @param id
+   */
   getPatientApi(id: string) {
     this.httpClient
       .get(host + id, {
@@ -68,6 +89,12 @@ export class PatientsService {
         }
       );
   }
+  /**
+   * Call api to delete patient.
+   * if the first element of the response is "Successfully deleted patient",
+   * then navigate to patients. Otherwise call next on errorChanged subject
+   * @param patient
+   */
   deletePatientApi(id: string) {
     this.httpClient
       .delete(host + id, {
