@@ -1,10 +1,11 @@
-import { NgModule } from "@angular/core";
+import { NgModule, ModuleWithProviders } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { PatientSearchPipe } from "../patients/patient-search.pipe";
 import { EncountersComponent } from "../encounters/encounters.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from "../app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
+import { AuthService } from "../auth/auth.service";
 
 @NgModule({
   declarations: [PatientSearchPipe, EncountersComponent],
@@ -15,6 +16,7 @@ import { HttpClientModule } from "@angular/common/http";
     FormsModule,
     ReactiveFormsModule
   ],
+  providers: [AuthService],
   exports: [
     PatientSearchPipe,
     EncountersComponent,
@@ -25,4 +27,11 @@ import { HttpClientModule } from "@angular/common/http";
     ReactiveFormsModule
   ]
 })
-export class SharedModule {}
+export class SharedModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [AuthService]
+    };
+  }
+}
