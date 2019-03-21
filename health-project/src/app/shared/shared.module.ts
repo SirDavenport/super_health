@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from "../app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
+import { AdminGuard } from "../auth/admin-guard.service";
 
 @NgModule({
   declarations: [PatientSearchPipe, EncountersComponent],
@@ -16,7 +17,7 @@ import { AuthService } from "../auth/auth.service";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AdminGuard],
   exports: [
     PatientSearchPipe,
     EncountersComponent,
@@ -31,7 +32,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [AuthService]
+      providers: [AuthService, AdminGuard]
     };
   }
 }
