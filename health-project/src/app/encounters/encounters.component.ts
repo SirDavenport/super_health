@@ -11,13 +11,12 @@ export class EncountersComponent implements OnInit {
   @Input() encounters: Encounter[];
   patientId: string;
   filter = "";
-  searchSelect = "firstName";
+  searchSelect = "visitCode";
   propNames = [
     { key: "visitCode", visual: "Visit Code" },
     { key: "billingCode", visual: "Billing Code" },
     { key: "icd", visual: "ICD 10" },
-    { key: "encounterId", visual: "Encounter Id" },
-    { key: "date", visual: "Date" }
+    { key: "encounterId", visual: "Encounter Id" }
   ];
   constructor(private route: ActivatedRoute, private router: Router) {}
 
