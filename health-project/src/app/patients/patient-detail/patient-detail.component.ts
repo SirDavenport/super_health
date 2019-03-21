@@ -16,7 +16,6 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
   error: any[];
   errorSub: Subscription;
   id: string;
-  encounters: Encounter[];
   encounterButtonClicked = false;
   constructor(
     private route: ActivatedRoute,
