@@ -31,8 +31,5 @@
     </div>
   </div>
   <hr />
-  <app-encounters
-    *ngIf="encounters != null"
-    [encounters]="encounters"
-  ></app-encounters>
+  <app-encounters *ngIf="encounterButtonClicked"></app-encounters>
 </div>

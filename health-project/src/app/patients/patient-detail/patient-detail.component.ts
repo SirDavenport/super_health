@@ -3,7 +3,6 @@ import { ActivatedRoute } from "@angular/router";
 import { PatientsService } from "../patients.service";
 import { Patient } from "../patient.model";
 import { Subscription } from "rxjs";
-import { EncounterService } from "src/app/encounters/encounter.service";
 import { Encounter } from "src/app/encounters/encounter.model";
 
 @Component({
@@ -17,12 +16,11 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
   error: any[];
   errorSub: Subscription;
   id: string;
-  encounterSub: Subscription;
   encounters: Encounter[];
+  encounterButtonClicked = false;
   constructor(
     private route: ActivatedRoute,
-    private patientsService: PatientsService,
-    private encounterService: EncounterService
+    private patientsService: PatientsService
   ) {}
 
   ngOnInit() {
@@ -32,11 +30,6 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
     this.sub = this.patientsService.patientChanged.subscribe(response => {
       this.patient = response;
     });
-    this.encounterSub = this.encounterService.encountersChanged.subscribe(
-      response => {
-        this.encounters = response;
-      }
-    );
     this.route.params.subscribe(params => {
       this.id = params["patientId"];
       this.patientsService.getPatientApi(this.id);
@@ -46,11 +39,10 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
     this.patientsService.deletePatientApi(this.id);
   }
   onViewEncounters() {
-    this.encounterService.getEncountersByPatientApi(this.id);
+    this.encounterButtonClicked = !this.encounterButtonClicked;
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
     this.errorSub.unsubscribe();
-    this.encounterSub.unsubscribe();
   }
 }
