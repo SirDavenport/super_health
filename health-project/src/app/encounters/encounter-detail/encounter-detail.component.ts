@@ -9,9 +9,8 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
   templateUrl: "./encounter-detail.component.html",
   styleUrls: ["./encounter-detail.component.css"]
 })
-export class EncounterDetailComponent implements OnInit, OnDestroy {
+export class EncounterDetailComponent implements OnInit {
   encounter: Encounter;
-  encounterSub: Subscription;
   id: string;
   constructor(
     private encounterService: EncounterService,
@@ -25,23 +24,18 @@ export class EncounterDetailComponent implements OnInit, OnDestroy {
     Subscribes to route params. Sets the encounterId and then calls getEncounterById
   */
   ngOnInit() {
-    this.encounterSub = this.encounterService.encounterChanged.subscribe(
-      response => {
-        this.encounter = response;
-      }
-    );
     this.route.params.subscribe((params: Params) => {
       this.id = params["encounterId"];
-      this.encounterService.getEncounterById(this.id);
+      this.encounterService
+        .getEncounterById(this.id)
+        .subscribe((response: Encounter) => {
+          this.encounter = response;
+        });
     });
   }
   //Navigates back to patient-detail of the patient who's encounter we are trying to update.
   onBack() {
     this.router.navigate(["patients/patient-detail", this.encounter.patientId]);
-  }
-  //Unsubscribes
-  ngOnDestroy() {
-    this.encounterSub.unsubscribe();
   }
 
   //Placeholder if I ever want add delete encounter.

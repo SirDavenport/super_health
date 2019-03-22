@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { EncounterService } from "../encounter.service";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Encounter } from "../encounter.model";
 import { Subscription } from "rxjs";
 
@@ -11,7 +11,7 @@ import { Subscription } from "rxjs";
   styleUrls: ["./edit-encounter.component.css"]
 })
 //Component dealing with editing or adding an encounter.
-export class EditEncounterComponent implements OnInit, OnDestroy {
+export class EditEncounterComponent implements OnInit {
   encounterForm: FormGroup;
   id: string;
   editMode = false;
@@ -31,13 +31,12 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
     null,
     null
   );
-  encounterSub: Subscription;
   error: string;
-  errorSub: Subscription;
   patientId: string;
   constructor(
     private encounterService: EncounterService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   //Subscribes to route params. Sets id to the param, encounterId.
@@ -52,24 +51,17 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
       this.id = params["encounterId"];
       this.patientId = params["patientId"];
       if (this.id != undefined) {
-        this.encounterService.getEncounterById(this.id);
+        this.encounterService
+          .getEncounterById(this.id)
+          .subscribe((response: Encounter) => {
+            this.encounter = response;
+            this.initForm();
+          });
         this.editMode = true;
       } else {
         this.encounter["patientId"] = this.patientId;
         this.initForm();
       }
-    });
-    //When the encounter is not null, call initForm
-    this.encounterSub = this.encounterService.encounterChanged.subscribe(
-      response => {
-        this.encounter = response;
-        if (this.encounter != null && this.editMode) {
-          this.initForm();
-        }
-      }
-    );
-    this.errorSub = this.encounterService.errorChanged.subscribe(response => {
-      this.error = response;
     });
   }
 
@@ -135,15 +127,31 @@ export class EditEncounterComponent implements OnInit, OnDestroy {
   */
   onSubmit() {
     if (this.editMode) {
-      this.encounterService.updateEncounter(this.encounterForm.value);
+      this.encounterService
+        .updateEncounter(this.encounterForm.value)
+        .subscribe((response: string[]) => {
+          if (response[0] === "Successfully updated encounter") {
+            this.router.navigate([
+              "encounter-detail",
+              this.encounter.encounterId
+            ]);
+          } else {
+            this.error = response.join(", ");
+          }
+        });
     } else {
-      this.encounterService.addEncounter(this.encounterForm.value);
+      this.encounterService
+        .addEncounter(this.encounterForm.value)
+        .subscribe((response: string[]) => {
+          if (response[0] === "Successfully added new encounter") {
+            this.router.navigate([
+              "patients/patient-detail",
+              this.encounter.patientId
+            ]);
+          } else {
+            this.error = response.join(", ");
+          }
+        });
     }
-  }
-
-  //Unsubscripes from subscriptions
-  ngOnDestroy() {
-    this.encounterSub.unsubscribe();
-    this.errorSub.unsubscribe();
   }
 }

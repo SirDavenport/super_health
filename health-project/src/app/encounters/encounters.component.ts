@@ -12,7 +12,6 @@ import { EncounterService } from "./encounter.service";
 export class EncountersComponent implements OnInit {
   encounters: Encounter[];
   patientId: string;
-  encounterSub: Subscription;
   filter = "";
   searchSelect = "visitCode";
   propNames = [
@@ -37,13 +36,12 @@ export class EncountersComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.patientId = params["patientId"];
-      this.encounterService.getEncountersByPatientApi(this.patientId);
+      this.encounterService
+        .getEncountersByPatientApi(this.patientId)
+        .subscribe((response: Encounter[]) => {
+          this.encounters = response;
+        });
     });
-    this.encounterSub = this.encounterService.encountersChanged.subscribe(
-      (response: Encounter[]) => {
-        this.encounters = response;
-      }
-    );
   }
 
   //When the row of the table is clicked, navigate to the encounter detail.
