@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
-
+import { tap } from "rxjs/operators";
 //Service handling login functionality
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -15,24 +15,16 @@ export class AuthService {
   //the login was successful. Otherwise, there was an error.
   //If successful, redierect to patients and set the token, if not call next on the loginError subject.
   login(email: string, password: string) {
-    this.httpClient
+    return this.httpClient
       .post("http://localhost:8080/users/login", {
         email: email,
         password: password
       })
-      .subscribe(
-        (response: string[]) => {
-          if (response.length > 1) {
-            this.token = response[0];
-            this.roles = response;
-            this.router.navigate(["/patients"]);
-          } else {
-            this.loginError.next("Email or Password are incorrect...");
-          }
-        },
-        error => {
-          this.loginError.next("Something went wrong...");
-        }
+      .pipe(
+        tap((response: string[]) => {
+          this.token = response[0];
+          this.roles = response;
+        })
       );
   }
   //Sets the token to null and navigates back to login.

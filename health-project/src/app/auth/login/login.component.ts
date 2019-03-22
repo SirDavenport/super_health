@@ -2,30 +2,32 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { AuthService } from "../auth.service";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"]
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   error: any;
-  errorSub: Subscription;
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   //Subscribes to loginError from authService
-  ngOnInit() {
-    this.errorSub = this.authService.loginError.subscribe(response => {
-      this.error = response;
-    });
-  }
+  ngOnInit() {}
   //calls login from authService
   onSubmit(form: NgForm) {
-    this.authService.login(form.value.email, form.value.password);
-  }
-
-  //Unsubscribes
-  ngOnDestroy() {
-    this.errorSub.unsubscribe();
+    this.authService.login(form.value.email, form.value.password).subscribe(
+      (response: string[]) => {
+        if (response.length > 1) {
+          this.router.navigate(["/patients"]);
+        } else {
+          this.error = "Email or Password are incorrect...";
+        }
+      },
+      error => {
+        this.error = "Something went wrong...";
+      }
+    );
   }
 }
