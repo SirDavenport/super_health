@@ -11,8 +11,6 @@ import { SharedModule } from "./shared/shared.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AdminGuard } from "./auth/admin-guard.service";
-import { AuthService } from "./auth/auth.service";
 
 @NgModule({
   declarations: [

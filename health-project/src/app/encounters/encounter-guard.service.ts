@@ -7,7 +7,7 @@ import {
 import { Injectable } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 //Guard to make sure they are logged in before trying to view encounter staff.
 //If you aren't, redirects you to login page.
 export class EncounterGuard implements CanActivate {

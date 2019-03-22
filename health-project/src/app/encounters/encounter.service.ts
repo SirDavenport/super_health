@@ -3,7 +3,7 @@ import { AuthService } from "../auth/auth.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Encounter } from "./encounter.model";
 const host = "http://localhost:8080/encounters/";
-@Injectable()
+@Injectable({ providedIn: "root" })
 //Service for encounter api calls.
 export class EncounterService {
   constructor(
