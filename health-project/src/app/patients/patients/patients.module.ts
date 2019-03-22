@@ -5,11 +5,10 @@ import { PatientDetailComponent } from "../patient-detail/patient-detail.compone
 import { EditPatientComponent } from "../edit-patient/edit-patient.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { PatientsService } from "../patients.service";
-import { PatientGuard } from "../patient-guard.service";
 import { HttpClientModule } from "@angular/common/http";
 import { PatientsRoutingModule } from "../patients-routing.module";
 import { EncountersComponent } from "src/app/encounters/encounters.component";
+import { AdminGuard } from "src/app/auth/admin-guard.service";
 
 @NgModule({
   declarations: [
@@ -23,10 +22,8 @@ import { EncountersComponent } from "src/app/encounters/encounters.component";
     PatientsRoutingModule,
     SharedModule,
     HttpClientModule,
-
     FormsModule,
     ReactiveFormsModule
-  ],
-  providers: [PatientsService, PatientGuard]
+  ]
 })
 export class PatientsModule {}

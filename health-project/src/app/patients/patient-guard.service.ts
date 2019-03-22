@@ -9,7 +9,7 @@ import { Injectable } from "@angular/core";
 import { PatientsService } from "./patients.service";
 import { AuthService } from "../auth/auth.service";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 //Make sure logged in before viewing certain pages, otherwise redirect to login.
 export class PatientGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}

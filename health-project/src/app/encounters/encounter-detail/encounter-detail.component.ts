@@ -37,7 +37,7 @@ export class EncounterDetailComponent implements OnInit, OnDestroy {
   }
   //Navigates back to patient-detail of the patient who's encounter we are trying to update.
   onBack() {
-    this.router.navigate(["patient-detail", this.encounter.patientId]);
+    this.router.navigate(["patients/patient-detail", this.encounter.patientId]);
   }
   //Unsubscribes
   ngOnDestroy() {

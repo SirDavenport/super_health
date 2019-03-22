@@ -1,9 +1,7 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { PatientsService } from "../patients.service";
 import { Patient } from "../patient.model";
-import { Subscription } from "rxjs";
-import { Encounter } from "src/app/encounters/encounter.model";
 
 @Component({
   selector: "app-patient-detail",
@@ -11,16 +9,15 @@ import { Encounter } from "src/app/encounters/encounter.model";
   styleUrls: ["./patient-detail.component.css"]
 })
 //Handles all things patient detail
-export class PatientDetailComponent implements OnInit, OnDestroy {
+export class PatientDetailComponent implements OnInit {
   patient: Patient;
-  sub: Subscription;
   error: any[];
-  errorSub: Subscription;
   id: string;
   encounterButtonClicked = false;
   constructor(
     private route: ActivatedRoute,
-    private patientsService: PatientsService
+    private patientsService: PatientsService,
+    private router: Router
   ) {}
 
   /**
@@ -30,22 +27,31 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
    * Calls getPatientApi from patientService.
    */
   ngOnInit() {
-    this.errorSub = this.patientsService.errorChanged.subscribe(response => {
-      this.error = response;
-    });
-    this.sub = this.patientsService.patientChanged.subscribe(response => {
-      this.patient = response;
-    });
     this.route.params.subscribe(params => {
       this.id = params["patientId"];
-      this.patientsService.getPatientApi(this.id);
+      this.patientsService.getPatientApi(this.id).subscribe(
+        (response: Patient) => {
+          this.patient = response;
+        },
+        (error: any) => {
+          this.error = error;
+        }
+      );
     });
   }
   /**
    * Calls deletePatientApi from patientsService
    */
   onDelete() {
-    this.patientsService.deletePatientApi(this.id);
+    this.patientsService
+      .deletePatientApi(this.id)
+      .subscribe((response: string[]) => {
+        if (response[0] === "Successfully deleted patient") {
+          this.router.navigate(["/patients"]);
+        } else {
+          this.error = response;
+        }
+      });
   }
   /**
    * Sets encounterButtonClicked to the opposite of what it was.
@@ -53,10 +59,5 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
    */
   onViewEncounters() {
     this.encounterButtonClicked = !this.encounterButtonClicked;
-  }
-  //Unsubscribe
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-    this.errorSub.unsubscribe();
   }
 }

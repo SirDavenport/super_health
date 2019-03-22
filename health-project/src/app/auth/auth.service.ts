@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 
 //Service handling login functionality
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class AuthService {
   token: string;
   roles: string[];

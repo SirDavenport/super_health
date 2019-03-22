@@ -9,10 +9,9 @@ import { EditEncounterComponent } from "../encounters/edit-encounter/edit-encoun
 import { EncounterGuard } from "../encounters/encounter-guard.service";
 const patientRoutes: Routes = [
   {
-    path: "patients",
+    path: "",
     component: PatientsComponent,
-    pathMatch: "full",
-    canActivate: [PatientGuard]
+    pathMatch: "full"
   },
   {
     path: "patient-detail/:patientId",

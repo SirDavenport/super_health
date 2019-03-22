@@ -79,7 +79,10 @@ export class EncounterService {
       })
       .subscribe(response => {
         if (response[0] === "Successfully added new encounter") {
-          this.router.navigate(["patient-detail", encounter.patientId]);
+          this.router.navigate([
+            "patients/patient-detail",
+            encounter.patientId
+          ]);
         } else {
           this.errorChanged.next(response);
         }

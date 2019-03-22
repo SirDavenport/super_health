@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { PatientsService } from "../patients.service";
 import { Patient } from "../patient.model";
 import { Subscription } from "rxjs";
@@ -33,7 +33,8 @@ export class EditPatientComponent implements OnInit {
   editMode = false;
   constructor(
     private route: ActivatedRoute,
-    private patientService: PatientsService
+    private patientService: PatientsService,
+    private router: Router
   ) {}
 
   //Sets id to the param patientId.
@@ -46,20 +47,18 @@ export class EditPatientComponent implements OnInit {
       this.id = params["patientId"];
       if (this.id != undefined) {
         this.editMode = true;
-        this.patientService.getPatientApi(this.id);
+        this.patientService.getPatientApi(this.id).subscribe(
+          (response: Patient) => {
+            this.patient = response;
+            this.initForm();
+          },
+          (error: any) => {
+            this.error = error;
+          }
+        );
       } else {
         this.initForm();
       }
-    });
-    //If patient is not null, we call initForm
-    this.sub = this.patientService.patientChanged.subscribe(response => {
-      this.patient = response;
-      if (this.patient != null && this.editMode) {
-        this.initForm();
-      }
-    });
-    this.errorSub = this.patientService.errorChanged.subscribe(response => {
-      this.error = response;
     });
   }
   /*
@@ -131,12 +130,28 @@ export class EditPatientComponent implements OnInit {
     if (this.editMode) {
       if (this.patientForm.valid) {
         patient = this.patientForm.value;
-        this.patientService.updatePatient(patient, this.id);
+        this.patientService
+          .updatePatient(patient, this.id)
+          .subscribe((response: string[]) => {
+            if (response[0] === "Successfully updated patient") {
+              this.router.navigate(["patients/patient-detail", this.id]);
+            } else {
+              this.error = response;
+            }
+          });
       }
     } else {
       if (this.patientForm.valid) {
         patient = this.patientForm.value;
-        this.patientService.addPatient(patient);
+        this.patientService
+          .addPatient(patient)
+          .subscribe((response: string[]) => {
+            if (response[0] === "Successfully added new patient") {
+              this.router.navigate(["/patients"]);
+            } else {
+              this.error = response;
+            }
+          });
       }
     }
   }
