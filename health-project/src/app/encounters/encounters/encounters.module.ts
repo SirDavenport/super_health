@@ -11,8 +11,8 @@ import { EncounterRoutingModule } from "../encounters-routing.module";
   declarations: [EncounterDetailComponent],
   imports: [
     CommonModule,
-    EncounterRoutingModule,
     SharedModule,
+    EncounterRoutingModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,

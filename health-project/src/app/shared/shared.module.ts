@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { PatientSearchPipe } from "../patients/patient-search.pipe";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -10,10 +10,4 @@ import { EditEncounterComponent } from "../encounters/edit-encounter/edit-encoun
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   exports: [PatientSearchPipe, EditEncounterComponent]
 })
-export class SharedModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: SharedModule
-    };
-  }
-}
+export class SharedModule {}

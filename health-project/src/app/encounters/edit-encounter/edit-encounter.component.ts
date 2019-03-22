@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { EncounterService } from "../encounter.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Encounter } from "../encounter.model";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-edit-encounter",

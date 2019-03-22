@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { EncounterService } from "../encounter.service";
 import { Encounter } from "../encounter.model";
-import { Subscription } from "rxjs";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 
 @Component({
