@@ -1,32 +1,17 @@
 import { NgModule, ModuleWithProviders } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { PatientSearchPipe } from "../patients/patient-search.pipe";
-import { EncountersComponent } from "../encounters/encounters.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AppRoutingModule } from "../app-routing.module";
-import { HttpClientModule } from "@angular/common/http";
+import { ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "../auth/auth.service";
 import { AdminGuard } from "../auth/admin-guard.service";
+import { RouterModule } from "@angular/router";
+import { EditEncounterComponent } from "../encounters/edit-encounter/edit-encounter.component";
 
 @NgModule({
-  declarations: [PatientSearchPipe, EncountersComponent],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+  declarations: [EditEncounterComponent, PatientSearchPipe],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   providers: [AuthService, AdminGuard],
-  exports: [
-    PatientSearchPipe,
-    EncountersComponent,
-    AppRoutingModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+  exports: [PatientSearchPipe, EditEncounterComponent]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders {

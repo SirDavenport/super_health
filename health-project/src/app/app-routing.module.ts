@@ -12,48 +12,8 @@ import { EditEncounterComponent } from "./encounters/edit-encounter/edit-encount
 import { AdminGuard } from "./auth/admin-guard.service";
 //All of the routes for the app
 const appRoutes: Routes = [
-  { path: "", redirectTo: "/patients", pathMatch: "full" },
-  {
-    path: "patient-detail/:patientId",
-    component: PatientDetailComponent,
-    pathMatch: "full",
-    canActivate: [PatientGuard, AdminGuard]
-  },
-  {
-    path: "patient-detail/:patientId/edit",
-    component: EditPatientComponent,
-    pathMatch: "full",
-    canActivate: [PatientGuard, AdminGuard]
-  },
-  {
-    path: "patients",
-    component: PatientsComponent,
-    pathMatch: "full",
-    canActivate: [PatientGuard]
-  },
-  {
-    path: "add-patient",
-    component: EditPatientComponent,
-    pathMatch: "full",
-    canActivate: [PatientGuard, AdminGuard]
-  },
-
+  { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  {
-    path: "encounter-detail/:encounterId",
-    component: EncounterDetailComponent,
-    canActivate: [EncounterGuard]
-  },
-  {
-    path: "encounter-detail/:encounterId/edit",
-    component: EditEncounterComponent,
-    canActivate: [EncounterGuard, AdminGuard]
-  },
-  {
-    path: "patient-detail/:patientId/add-encounter",
-    component: EditEncounterComponent,
-    canActivate: [EncounterGuard]
-  },
   { path: "**", component: NotFoundComponent }
 ];
 @NgModule({

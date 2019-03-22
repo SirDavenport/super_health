@@ -8,6 +8,9 @@ import { NotFoundComponent } from "./not-found/not-found.component";
 import { PatientsModule } from "./patients/patients/patients.module";
 import { EncountersModule } from "./encounters/encounters/encounters.module";
 import { SharedModule } from "./shared/shared.module";
+import { AppRoutingModule } from "./app-routing.module";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,7 +20,16 @@ import { SharedModule } from "./shared/shared.module";
     SignupComponent,
     NotFoundComponent
   ],
-  imports: [BrowserModule, PatientsModule, EncountersModule, SharedModule],
+  imports: [
+    BrowserModule,
+    PatientsModule,
+    EncountersModule,
+    SharedModule,
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

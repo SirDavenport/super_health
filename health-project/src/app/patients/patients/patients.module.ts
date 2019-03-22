@@ -5,17 +5,28 @@ import { PatientDetailComponent } from "../patient-detail/patient-detail.compone
 import { EditPatientComponent } from "../edit-patient/edit-patient.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AppRoutingModule } from "src/app/app-routing.module";
 import { PatientsService } from "../patients.service";
 import { PatientGuard } from "../patient-guard.service";
+import { HttpClientModule } from "@angular/common/http";
+import { PatientsRoutingModule } from "../patients-routing.module";
+import { EncountersComponent } from "src/app/encounters/encounters.component";
 
 @NgModule({
   declarations: [
     PatientsComponent,
     PatientDetailComponent,
-    EditPatientComponent
+    EditPatientComponent,
+    EncountersComponent
   ],
-  imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    PatientsRoutingModule,
+    SharedModule,
+    HttpClientModule,
+
+    FormsModule,
+    ReactiveFormsModule
+  ],
   providers: [PatientsService, PatientGuard]
 })
 export class PatientsModule {}
