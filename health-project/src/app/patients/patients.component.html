@@ -55,7 +55,7 @@
             style="cursor: pointer;"
             (click)="onRowClick(patient.patientId)"
           >
-            <td>{{ patient.patientId }}</td>
+            <td>{{ patient.patientId | shorten }}</td>
             <td>{{ patient.firstName }}</td>
             <td>{{ patient.lastName }}</td>
             <td>{{ patient.age }}</td>
