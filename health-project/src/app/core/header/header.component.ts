@@ -8,7 +8,7 @@ import { AuthService } from "src/app/auth/auth.service";
 })
 //Handles the nav bar
 export class HeaderComponent {
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   //Calls logout service from authService.
   onLogout() {

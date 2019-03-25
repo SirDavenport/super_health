@@ -14,7 +14,6 @@ import { EncounterRoutingModule } from "../encounters-routing.module";
     SharedModule,
     EncounterRoutingModule,
     HttpClientModule,
-    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule
   ]

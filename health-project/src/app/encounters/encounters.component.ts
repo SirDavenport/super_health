@@ -46,6 +46,6 @@ export class EncountersComponent implements OnInit {
 
   //When the row of the table is clicked, navigate to the encounter detail.
   onRowClick(id: string) {
-    this.router.navigate(["/encounter-detail", id]);
+    this.router.navigate(["encounter-detail", id]);
   }
 }

@@ -24,6 +24,7 @@ const patientRoutes: Routes = [
     component: EditEncounterComponent,
     canActivate: [EncounterGuard, AdminGuard]
   },
+
   {
     path: "patient-detail/:patientId/edit",
     component: EditPatientComponent,

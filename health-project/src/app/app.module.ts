@@ -14,13 +14,12 @@ import { CoreModule } from "./core/core.module";
   declarations: [AppComponent, SignupComponent, NotFoundComponent],
   imports: [
     BrowserModule,
-    CoreModule,
     EncountersModule,
-    SharedModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule
   ],
   bootstrap: [AppComponent]
 })
