@@ -5,10 +5,12 @@
     </div>
   </div>
   <div class="col-xs-12 text-center">
+    <h3 style="color: red;">{{ error }}</h3>
     <button
       type="button"
       class="btn btn-primary"
       routerLink="/patients/add-patient"
+      (click)="onAddClick()"
     >
       Create Patient
     </button>

@@ -3,6 +3,7 @@ import { Patient } from "./patient.model";
 import { Router } from "@angular/router";
 import { PatientsService } from "./patients.service";
 import { Subscription, Observable } from "rxjs";
+import { AuthService } from "../auth/auth.service";
 
 @Component({
   selector: "app-patients",
@@ -14,10 +15,9 @@ import { Subscription, Observable } from "rxjs";
  */
 export class PatientsComponent implements OnInit {
   patients: Patient[];
-  patientsObservable: Observable<any>;
-  sub: Subscription;
   filter = "";
   searchSelect = "firstName";
+  error: string;
   propNames = [
     { key: "patientId", visual: "Patient Id" },
     { key: "firstName", visual: "First Name" },
@@ -29,7 +29,8 @@ export class PatientsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private patientService: PatientsService
+    private patientService: PatientsService,
+    private authService: AuthService
   ) {}
 
   /**
@@ -48,6 +49,16 @@ export class PatientsComponent implements OnInit {
    * @param id
    */
   onRowClick(id: string) {
-    this.router.navigate(["patients/patient-detail", id]);
+    if (!this.authService.roles.includes("ADMIN")) {
+      this.error = "Only admins can view patient details.";
+    } else {
+      this.router.navigate(["patients/patient-detail", id]);
+    }
+  }
+
+  onAddClick() {
+    if (!this.authService.roles.includes("ADMIN")) {
+      this.error = "Only admins can create new patients.";
+    }
   }
 }
