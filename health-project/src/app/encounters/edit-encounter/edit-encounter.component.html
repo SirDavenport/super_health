@@ -1,5 +1,7 @@
 <div class="container-fluid">
-  <div *ngIf="error != null">Errors: {{ error }}</div>
+  <div class="text-center" style="color: red;" *ngIf="error != null">
+    Errors: {{ error }}
+  </div>
   <h1 *ngIf="editMode" class="text-center">Edit Encounter</h1>
   <h1 *ngIf="!editMode" class="text-center">Create Encounter</h1>
   <div class="row">
@@ -12,10 +14,30 @@
         <div class="form-group">
           <label for="visitCode">Visit Code</label>
           <input type="text" class="form-control" formControlName="visitCode" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['visitCode'].touched &&
+              !encounterForm.controls['visitCode'].valid
+            "
+          >
+            Visit code needs to be in this form: A2A 2A2
+          </span>
         </div>
         <div class="form-group">
           <label for="provider">Provider</label>
           <input type="text" class="form-control" formControlName="provider" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['provider'].touched &&
+              !encounterForm.controls['provider'].valid
+            "
+          >
+            Provider needs to be more than 2 letters
+          </span>
         </div>
         <div class="form-group">
           <label for="billingCode">Billing Code</label>
@@ -24,18 +46,58 @@
             class="form-control"
             formControlName="billingCode"
           />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['billingCode'].touched &&
+              !encounterForm.controls['billingCode'].valid
+            "
+          >
+            Billing code needs to be in this form: 123.123.123-12
+          </span>
         </div>
         <div class="form-group">
           <label for="icd">ICD10</label>
           <input type="text" class="form-control" formControlName="icd" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['icd'].touched &&
+              !encounterForm.controls['icd'].valid
+            "
+          >
+            ICD10 needs to be in this form: A11
+          </span>
         </div>
         <div class="form-group">
           <label for="totalCost">Total Cost</label>
           <input type="text" class="form-control" formControlName="totalCost" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['totalCost'].touched &&
+              !encounterForm.controls['totalCost'].valid
+            "
+          >
+            Total Cost needs to be a number
+          </span>
         </div>
         <div class="form-group">
           <label for="copay">Copay</label>
           <input type="text" class="form-control" formControlName="copay" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['copay'].touched &&
+              !encounterForm.controls['copay'].valid
+            "
+          >
+            Copay needs to be a number
+          </span>
         </div>
         <div class="form-group">
           <label for="chiefComplaint">Chief Complaint</label>
@@ -44,18 +106,58 @@
             class="form-control"
             formControlName="chiefComplaint"
           />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['chiefComplaint'].touched &&
+              !encounterForm.controls['chiefComplaint'].valid
+            "
+          >
+            Chief Complaint needs to be more than 2 letters
+          </span>
         </div>
         <div class="form-group">
           <label for="pulse">Pulse</label>
           <input type="text" class="form-control" formControlName="pulse" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['pulse'].touched &&
+              !encounterForm.controls['pulse'].valid
+            "
+          >
+            Pulse needs to be a number
+          </span>
         </div>
         <div class="form-group">
           <label for="systolic">Systolic</label>
           <input type="text" class="form-control" formControlName="systolic" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['systolic'].touched &&
+              !encounterForm.controls['systolic'].valid
+            "
+          >
+            Systolic needs to be a number
+          </span>
         </div>
         <div class="form-group">
           <label for="diastolic">Diastolic</label>
           <input type="text" class="form-control" formControlName="diastolic" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['diastolic'].touched &&
+              !encounterForm.controls['diastolic'].valid
+            "
+          >
+            Diastolic needs to be a number
+          </span>
         </div>
         <div class="form-group">
           <label for="notes">Notes</label>
@@ -64,6 +166,16 @@
             formControlName="notes"
             rows="6"
           ></textarea>
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              encounterForm.controls['notes'].touched &&
+              !encounterForm.controls['notes'].valid
+            "
+          >
+            Notes need to be longer than 2 letters
+          </span>
         </div>
         <div class="row text-center">
           <div class="col-xs-12">

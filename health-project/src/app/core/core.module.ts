@@ -4,7 +4,6 @@ import { CommonModule } from "@angular/common";
 import { AppRoutingModule } from "../app-routing.module";
 import { LoginComponent } from "./login/login.component";
 import { FormsModule } from "@angular/forms";
-import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [HeaderComponent, LoginComponent],

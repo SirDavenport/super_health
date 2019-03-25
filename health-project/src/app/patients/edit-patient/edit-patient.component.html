@@ -1,5 +1,7 @@
-<div *ngIf="error != null">Errors: {{ error }}</div>
 <div class="row" *ngIf="(editMode && patient != undefined) || !editMode">
+  <div class="text-center" style="color: red;" *ngIf="error != null">
+    Errors: {{ error }}
+  </div>
   <div class="col-xs-12 col-sm-10 col-md-6 col-sm-offset-1 col-md-offset-3">
     <h1 *ngIf="editMode" class="text-center">Edit Patient</h1>
     <h1 *ngIf="!editMode" class="text-center">Create Patient</h1>
@@ -11,51 +13,171 @@
       <div class="form-group">
         <label for="firstName">First name</label>
         <input type="text" class="form-control" formControlName="firstName" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['firstName'].touched &&
+            !patientForm.controls['firstName'].valid
+          "
+        >
+          First name needs to be more than 2 letters
+        </span>
       </div>
       <div class="form-group">
         <label for="lastName">Last name</label>
         <input type="text" class="form-control" formControlName="lastName" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['lastName'].touched &&
+            !patientForm.controls['lastName'].valid
+          "
+        >
+          Last name needs to be more than 2 letters
+        </span>
       </div>
       <div class="form-group">
         <label for="ssn">SSN</label>
         <input type="text" class="form-control" formControlName="ssn" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['ssn'].touched &&
+            !patientForm.controls['ssn'].valid
+          "
+        >
+          SSN needs to be 123-12-1234
+        </span>
       </div>
       <div class="form-group">
         <label for="gender">Gender</label>
         <input type="text" class="form-control" formControlName="gender" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['gender'].touched &&
+            !patientForm.controls['gender'].valid
+          "
+        >
+          Gender needs to be Male or Female
+        </span>
       </div>
       <div class="form-group">
         <label for="age">Age</label>
         <input type="text" class="form-control" formControlName="age" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['age'].touched &&
+            !patientForm.controls['age'].valid
+          "
+        >
+          Age needs to be a number
+        </span>
       </div>
       <div class="form-group">
         <label for="height">Height</label>
         <input type="text" class="form-control" formControlName="height" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['height'].touched &&
+            !patientForm.controls['height'].valid
+          "
+        >
+          Height needs to be a number
+        </span>
       </div>
       <div class="form-group">
         <label for="weight">Weight</label>
         <input type="text" class="form-control" formControlName="weight" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['weight'].touched &&
+            !patientForm.controls['weight'].valid
+          "
+        >
+          Weight needs to be a number
+        </span>
       </div>
       <div class="form-group">
         <label for="insurance">Insurance</label>
         <input type="text" class="form-control" formControlName="insurance" />
+        <span
+          class="help-block"
+          style="color: red;"
+          *ngIf="
+            patientForm.controls['insurance'].touched &&
+            !patientForm.controls['insurance'].valid
+          "
+        >
+          Insurance needs to be more than two letters
+        </span>
       </div>
       <div formGroupName="address">
         <div class="form-group">
           <label for="street">Street</label>
           <input type="text" class="form-control" formControlName="street" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              patientForm.controls['address'].controls['street'].touched &&
+              !patientForm.controls['address'].controls['street'].valid
+            "
+          >
+            Street needs to be a number followed by at least one word
+          </span>
         </div>
         <div class="form-group">
           <label for="city">City</label>
           <input type="text" class="form-control" formControlName="city" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              patientForm.controls['address'].controls['city'].touched &&
+              !patientForm.controls['address'].controls['city'].valid
+            "
+          >
+            City needs to be a word
+          </span>
         </div>
         <div class="form-group">
           <label for="state">State</label>
           <input type="text" class="form-control" formControlName="state" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              patientForm.controls['address'].controls['state'].touched &&
+              !patientForm.controls['address'].controls['state'].valid
+            "
+          >
+            State needs to ne an abbrv of a state
+          </span>
         </div>
         <div class="form-group">
           <label for="postal">Postal Code</label>
           <input type="text" class="form-control" formControlName="postal" />
+          <span
+            class="help-block"
+            style="color: red;"
+            *ngIf="
+              patientForm.controls['address'].controls['postal'].touched &&
+              !patientForm.controls['address'].controls['postal'].valid
+            "
+          >
+            Postal needs to be in the form 12345 or 12345-1234
+          </span>
         </div>
       </div>
       <div class="row text-center">

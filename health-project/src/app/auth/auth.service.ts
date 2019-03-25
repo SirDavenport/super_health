@@ -16,7 +16,7 @@ export class AuthService {
   //If successful, redierect to patients and set the token, if not call next on the loginError subject.
   login(email: string, password: string) {
     return this.httpClient
-      .post("http://localhost:8080/users/login", {
+      .post("https://java-super-health.herokuapp.com/users/login", {
         email: email,
         password: password
       })

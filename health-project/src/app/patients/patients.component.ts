@@ -50,7 +50,7 @@ export class PatientsComponent implements OnInit {
    */
   onRowClick(id: string) {
     if (!this.authService.roles.includes("ADMIN")) {
-      this.error = "Only admins can view patient details.";
+      this.error = "You are not allowed to create new patients";
     } else {
       this.router.navigate(["patients/patient-detail", id]);
     }
@@ -58,7 +58,7 @@ export class PatientsComponent implements OnInit {
 
   onAddClick() {
     if (!this.authService.roles.includes("ADMIN")) {
-      this.error = "Only admins can create new patients.";
+      this.error = "You are not allowed to view patient details";
     }
   }
 }
