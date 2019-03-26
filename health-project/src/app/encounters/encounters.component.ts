@@ -3,7 +3,7 @@ import { Encounter } from "./encounter.model";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { EncounterService } from "./encounter.service";
 import { Store } from "@ngrx/store";
-import * as encounterStuff from "../store/encounters.reducers";
+import * as appStuff from "../store/app.state";
 import { Observable } from "rxjs";
 
 @Component({
@@ -26,7 +26,7 @@ export class EncountersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private encounterService: EncounterService,
-    private store: Store<encounterStuff.AppState>
+    private store: Store<appStuff.AppState>
   ) {}
 
   /**

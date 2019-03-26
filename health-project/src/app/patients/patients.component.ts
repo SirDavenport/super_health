@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { PatientsService } from "./patients.service";
 import { Subscription, Observable } from "rxjs";
 import { AuthService } from "../auth/auth.service";
-
 @Component({
   selector: "app-patients",
   templateUrl: "./patients.component.html",
@@ -14,6 +13,7 @@ import { AuthService } from "../auth/auth.service";
  * Handles the main patients component.
  */
 export class PatientsComponent implements OnInit {
+  patientsState: Observable<{ patients: Patient[] }>;
   patients: Patient[];
   filter = "";
   searchSelect = "firstName";
@@ -39,7 +39,7 @@ export class PatientsComponent implements OnInit {
    * sets this.patients to what is returned from patientsChanged.
    */
   ngOnInit() {
-    this.patientService.getPatientsApi().subscribe((response: Patient[]) => {
+    this.patientService.getPatientsApi().subscribe(response => {
       this.patients = response;
     });
   }

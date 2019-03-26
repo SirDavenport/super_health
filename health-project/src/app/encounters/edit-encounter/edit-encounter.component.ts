@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Encounter } from "../encounter.model";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
-import * as encounterStuff from "../../store/encounters.reducers";
+import * as appStuff from "../../store/app.state";
 @Component({
   selector: "app-edit-encounter",
   templateUrl: "./edit-encounter.component.html",
@@ -24,7 +24,7 @@ export class EditEncounterComponent implements OnInit {
     private encounterService: EncounterService,
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<encounterStuff.AppState>
+    private store: Store<appStuff.AppState>
   ) {}
 
   //Subscribes to route params. Sets id to the param, encounterId.

@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CoreModule } from "./core/core.module";
 import { StoreModule } from "@ngrx/store";
 import { encounterReducer } from "./store/encounters.reducers";
+import { patientReducer } from "./store/patients.reducers";
 
 @NgModule({
   declarations: [AppComponent, SignupComponent, NotFoundComponent],
@@ -21,7 +22,10 @@ import { encounterReducer } from "./store/encounters.reducers";
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    StoreModule.forRoot({ encounterStuff: encounterReducer })
+    StoreModule.forRoot({
+      patientStuff: patientReducer,
+      encounterStuff: encounterReducer
+    })
   ],
   bootstrap: [AppComponent]
 })

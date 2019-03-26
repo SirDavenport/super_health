@@ -2,6 +2,7 @@ import { Patient } from "./patient.model";
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "../auth/auth.service";
+import * as patientActions from "../store/patients.actions";
 const host = "https://java-super-health.herokuapp.com/patients/";
 @Injectable({ providedIn: "root" })
 //Handles all the patient api calls.

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { EncounterService } from "../encounter.service";
 import { Encounter } from "../encounter.model";
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import * as encounterStuff from "../../store/encounters.reducers";
+import * as appStuff from "../../store/app.state";
 import { Store } from "@ngrx/store";
 
 @Component({
@@ -17,7 +17,7 @@ export class EncounterDetailComponent implements OnInit {
     private encounterService: EncounterService,
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<encounterStuff.AppState>
+    private store: Store<appStuff.AppState>
   ) {}
 
   /*

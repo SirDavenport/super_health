@@ -2,10 +2,7 @@ import * as EncounterActions from "./encounters.actions";
 import { Encounter } from "../encounters/encounter.model";
 export const GET_ENCOUNTERS = "GET_ENCOUNTERS";
 
-export interface AppState {
-  encounterStuff: State;
-}
-export interface State {
+export interface EncounterState {
   encounters: Encounter[];
   encounter: Encounter;
 }
