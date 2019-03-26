@@ -1,5 +1,5 @@
 import * as EncounterActions from "./encounters.actions";
-import { Encounter } from "../encounter.model";
+import { Encounter } from "../encounters/encounter.model";
 export const GET_ENCOUNTERS = "GET_ENCOUNTERS";
 
 export interface AppState {

@@ -9,7 +9,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CoreModule } from "./core/core.module";
 import { StoreModule } from "@ngrx/store";
-import { encounterReducer } from "./encounters/store/encounters.reducers";
+import { encounterReducer } from "./store/encounters.reducers";
 
 @NgModule({
   declarations: [AppComponent, SignupComponent, NotFoundComponent],

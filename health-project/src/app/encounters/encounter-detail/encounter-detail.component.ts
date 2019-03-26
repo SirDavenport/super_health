@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { EncounterService } from "../encounter.service";
 import { Encounter } from "../encounter.model";
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import * as encounterStuff from "../store/encounters.reducers";
+import * as encounterStuff from "../../store/encounters.reducers";
 import { Store } from "@ngrx/store";
 
 @Component({

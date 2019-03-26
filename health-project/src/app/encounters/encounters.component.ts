@@ -3,7 +3,7 @@ import { Encounter } from "./encounter.model";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { EncounterService } from "./encounter.service";
 import { Store } from "@ngrx/store";
-import * as encounterStuff from "./store/encounters.reducers";
+import * as encounterStuff from "../store/encounters.reducers";
 import { Observable } from "rxjs";
 
 @Component({

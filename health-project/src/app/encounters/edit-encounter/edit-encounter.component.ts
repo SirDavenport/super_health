@@ -5,7 +5,7 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Encounter } from "../encounter.model";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
-import * as encounterStuff from "../store/encounters.reducers";
+import * as encounterStuff from "../../store/encounters.reducers";
 @Component({
   selector: "app-edit-encounter",
   templateUrl: "./edit-encounter.component.html",

@@ -3,8 +3,8 @@ import { AuthService } from "../auth/auth.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Encounter } from "./encounter.model";
 import { Store } from "@ngrx/store";
-import * as EncounterActions from "./store/encounters.actions";
-import * as encounterStuff from "./store/encounters.reducers";
+import * as EncounterActions from "../store/encounters.actions";
+import * as encounterStuff from "../store/encounters.reducers";
 const host = "https://java-super-health.herokuapp.com/encounters/";
 @Injectable({ providedIn: "root" })
 //Service for encounter api calls.
