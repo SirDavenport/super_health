@@ -1,12 +1,11 @@
 import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { PatientsComponent } from "./patients.component";
-import { PatientGuard } from "./patient-guard.service";
+import { LoginGuard } from "../login-guard.service";
 import { PatientDetailComponent } from "./patient-detail/patient-detail.component";
 import { AdminGuard } from "../auth/admin-guard.service";
 import { EditPatientComponent } from "./edit-patient/edit-patient.component";
 import { EditEncounterComponent } from "../encounters/edit-encounter/edit-encounter.component";
-import { EncounterGuard } from "../encounters/encounter-guard.service";
 const patientRoutes: Routes = [
   {
     path: "",
@@ -17,25 +16,25 @@ const patientRoutes: Routes = [
     path: "patient-detail/:patientId",
     component: PatientDetailComponent,
     pathMatch: "full",
-    canActivate: [PatientGuard, AdminGuard]
+    canActivate: [LoginGuard, AdminGuard]
   },
   {
     path: "patient-detail/:patientId/add-encounter",
     component: EditEncounterComponent,
-    canActivate: [EncounterGuard, AdminGuard]
+    canActivate: [LoginGuard, AdminGuard]
   },
 
   {
     path: "patient-detail/:patientId/edit",
     component: EditPatientComponent,
     pathMatch: "full",
-    canActivate: [PatientGuard, AdminGuard]
+    canActivate: [LoginGuard, AdminGuard]
   },
   {
     path: "add-patient",
     component: EditPatientComponent,
     pathMatch: "full",
-    canActivate: [PatientGuard, AdminGuard]
+    canActivate: [LoginGuard, AdminGuard]
   }
 ];
 @NgModule({

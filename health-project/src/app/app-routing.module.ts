@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule, PreloadAllModules } from "@angular/router";
 import { NotFoundComponent } from "./not-found/not-found.component";
-import { PatientGuard } from "./patients/patient-guard.service";
+import { LoginGuard } from "./login-guard.service";
 import { LoginComponent } from "./core/login/login.component";
 import { SignupComponent } from "./auth/signup/signup.component";
 //All of the routes for the app
@@ -12,7 +12,7 @@ const appRoutes: Routes = [
   {
     path: "patients",
     loadChildren: "./patients/patients/patients.module#PatientsModule",
-    canActivate: [PatientGuard]
+    canActivate: [LoginGuard]
   },
   { path: "**", component: NotFoundComponent }
 ];

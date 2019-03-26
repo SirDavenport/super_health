@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Patient } from "./patient.model";
 import { Router } from "@angular/router";
 import { PatientsService } from "./patients.service";
-import { Subscription, Observable } from "rxjs";
 import { AuthService } from "../auth/auth.service";
 @Component({
   selector: "app-patients",
@@ -13,7 +12,6 @@ import { AuthService } from "../auth/auth.service";
  * Handles the main patients component.
  */
 export class PatientsComponent implements OnInit {
-  patientsState: Observable<{ patients: Patient[] }>;
   patients: Patient[];
   filter = "";
   searchSelect = "firstName";
@@ -49,11 +47,7 @@ export class PatientsComponent implements OnInit {
    * @param id
    */
   onRowClick(id: string) {
-    if (!this.authService.roles.includes("ADMIN")) {
-      this.error = "You are not allowed to create new patients";
-    } else {
-      this.router.navigate(["patients/patient-detail", id]);
-    }
+    this.router.navigate(["patients/patient-detail", id]);
   }
 
   onAddClick() {

@@ -10,10 +10,10 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li routerLinkActive="active" *ngIf="authService.token == null">
+        <li routerLinkActive="active" *ngIf="!token">
           <a routerLink="/login">Login</a>
         </li>
-        <li routerLinkActive="active" *ngIf="authService.token != null">
+        <li routerLinkActive="active" *ngIf="token">
           <a routerLink="/login" (click)="onLogout()">Logout</a>
         </li>
       </ul>

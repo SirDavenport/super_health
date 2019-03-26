@@ -11,6 +11,7 @@ import { CoreModule } from "./core/core.module";
 import { StoreModule } from "@ngrx/store";
 import { encounterReducer } from "./store/encounters.reducers";
 import { patientReducer } from "./store/patients.reducers";
+import { authReducer } from "./store/auth.reducers";
 
 @NgModule({
   declarations: [AppComponent, SignupComponent, NotFoundComponent],
@@ -24,7 +25,8 @@ import { patientReducer } from "./store/patients.reducers";
     CoreModule,
     StoreModule.forRoot({
       patientStuff: patientReducer,
-      encounterStuff: encounterReducer
+      encounterStuff: encounterReducer,
+      authStuff: authReducer
     })
   ],
   bootstrap: [AppComponent]

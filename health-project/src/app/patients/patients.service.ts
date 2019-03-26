@@ -1,23 +1,28 @@
 import { Patient } from "./patient.model";
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { AuthService } from "../auth/auth.service";
-import * as patientActions from "../store/patients.actions";
+import * as appStuff from "../store/app.state";
+import { Store } from "@ngrx/store";
 const host = "https://java-super-health.herokuapp.com/patients/";
 @Injectable({ providedIn: "root" })
 //Handles all the patient api calls.
-export class PatientsService {
+export class PatientsService implements OnInit {
+  token: string;
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private store: Store<appStuff.AppState>
   ) {}
-
+  ngOnInit() {}
   /**
    * Get all patients from backend
    */
   getPatientsApi() {
+    let token = null;
+    this.store.select("authStuff").subscribe(response => {
+      token = response.token;
+    });
     return this.httpClient.get<Patient[]>(host, {
-      headers: new HttpHeaders().set("jwt", this.authService.token)
+      headers: new HttpHeaders().set("jwt", token)
     });
   }
   /**
@@ -25,8 +30,12 @@ export class PatientsService {
    * @param patient
    */
   addPatient(patient: Patient) {
+    let token = null;
+    this.store.select("authStuff").subscribe(response => {
+      token = response.token;
+    });
     return this.httpClient.post(host, patient, {
-      headers: new HttpHeaders().set("jwt", this.authService.token)
+      headers: new HttpHeaders().set("jwt", token)
     });
   }
   /**
@@ -34,8 +43,12 @@ export class PatientsService {
    * @param patient
    */
   updatePatient(patient: Patient, id: string) {
+    let token = null;
+    this.store.select("authStuff").subscribe(response => {
+      token = response.token;
+    });
     return this.httpClient.put(host + id, patient, {
-      headers: new HttpHeaders().set("jwt", this.authService.token)
+      headers: new HttpHeaders().set("jwt", token)
     });
   }
   /**
@@ -43,8 +56,12 @@ export class PatientsService {
    * @param id
    */
   getPatientApi(id: string) {
+    let token = null;
+    this.store.select("authStuff").subscribe(response => {
+      token = response.token;
+    });
     return this.httpClient.get(host + id, {
-      headers: new HttpHeaders().set("jwt", this.authService.token)
+      headers: new HttpHeaders().set("jwt", token)
     });
   }
   /**
@@ -52,8 +69,12 @@ export class PatientsService {
    * @param patient
    */
   deletePatientApi(id: string) {
+    let token = null;
+    this.store.select("authStuff").subscribe(response => {
+      token = response.token;
+    });
     return this.httpClient.delete(host + id, {
-      headers: new HttpHeaders().set("jwt", this.authService.token)
+      headers: new HttpHeaders().set("jwt", token)
     });
   }
 }
