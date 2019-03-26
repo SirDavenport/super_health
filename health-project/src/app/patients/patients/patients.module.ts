@@ -9,6 +9,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { PatientsRoutingModule } from "../patients-routing.module";
 import { EncountersComponent } from "src/app/encounters/encounters.component";
 import { AuthInterceptor } from "src/app/shared/auth.interceptor";
+import { StoreModule } from "@ngrx/store";
+import { patientReducer } from "src/app/store/patients.reducers";
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { AuthInterceptor } from "src/app/shared/auth.interceptor";
     SharedModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature("patientStuff", patientReducer)
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

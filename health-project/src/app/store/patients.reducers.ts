@@ -1,6 +1,10 @@
 import { Patient } from "../patients/patient.model";
 import * as PatientAction from "./patients.actions";
 
+export interface FeatureState {
+  patientStuff: PatientState;
+}
+
 export interface PatientState {
   patients: Patient[];
   patient: Patient;
