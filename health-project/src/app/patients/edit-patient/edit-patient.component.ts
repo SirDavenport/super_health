@@ -4,8 +4,9 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { PatientsService } from "../patients.service";
 import { Patient } from "../patient.model";
 import { Subscription } from "rxjs";
-import { validateConfig } from "@angular/router/src/config";
 import { Address } from "../address.model";
+import { Store } from "@ngrx/store";
+import * as appStuff from "../../store/app.state";
 
 @Component({
   selector: "app-edit-patient",
@@ -34,7 +35,8 @@ export class EditPatientComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private patientService: PatientsService,
-    private router: Router
+    private router: Router,
+    private store: Store<appStuff.AppState>
   ) {}
 
   //Sets id to the param patientId.
@@ -47,9 +49,10 @@ export class EditPatientComponent implements OnInit {
       this.id = params["patientId"];
       if (this.id != undefined) {
         this.editMode = true;
-        this.patientService.getPatientApi(this.id).subscribe(
-          (response: Patient) => {
-            this.patient = response;
+        this.patientService.getPatientApi(this.id);
+        this.store.select("patientStuff").subscribe(
+          response => {
+            this.patient = response.patient;
             this.initForm();
           },
           (error: any) => {

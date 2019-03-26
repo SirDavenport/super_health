@@ -3,6 +3,8 @@ import { Patient } from "./patient.model";
 import { Router } from "@angular/router";
 import { PatientsService } from "./patients.service";
 import { AuthService } from "../auth/auth.service";
+import { Store } from "@ngrx/store";
+import * as appStuff from "../store/app.state";
 @Component({
   selector: "app-patients",
   templateUrl: "./patients.component.html",
@@ -28,7 +30,8 @@ export class PatientsComponent implements OnInit {
   constructor(
     private router: Router,
     private patientService: PatientsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private store: Store<appStuff.AppState>
   ) {}
 
   /**
@@ -37,8 +40,9 @@ export class PatientsComponent implements OnInit {
    * sets this.patients to what is returned from patientsChanged.
    */
   ngOnInit() {
-    this.patientService.getPatientsApi().subscribe(response => {
-      this.patients = response;
+    this.patientService.getPatientsApi();
+    this.store.select("patientStuff").subscribe(data => {
+      this.patients = data.patients;
     });
   }
 
@@ -48,11 +52,5 @@ export class PatientsComponent implements OnInit {
    */
   onRowClick(id: string) {
     this.router.navigate(["patients/patient-detail", id]);
-  }
-
-  onAddClick() {
-    if (!this.authService.roles.includes("ADMIN")) {
-      this.error = "You are not allowed to view patient details";
-    }
   }
 }

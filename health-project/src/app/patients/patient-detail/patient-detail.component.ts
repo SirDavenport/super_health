@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PatientsService } from "../patients.service";
 import { Patient } from "../patient.model";
-
+import { Store } from "@ngrx/store";
+import * as appStuff from "../../store/app.state";
 @Component({
   selector: "app-patient-detail",
   templateUrl: "./patient-detail.component.html",
@@ -17,7 +18,8 @@ export class PatientDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private patientsService: PatientsService,
-    private router: Router
+    private router: Router,
+    private store: Store<appStuff.AppState>
   ) {}
 
   /**
@@ -29,9 +31,10 @@ export class PatientDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = params["patientId"];
-      this.patientsService.getPatientApi(this.id).subscribe(
-        (response: Patient) => {
-          this.patient = response;
+      this.patientsService.getPatientApi(this.id);
+      this.store.select("patientStuff").subscribe(
+        response => {
+          this.patient = response.patient;
         },
         (error: any) => {
           this.error = error;

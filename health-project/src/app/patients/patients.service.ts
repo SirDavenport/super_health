@@ -3,6 +3,7 @@ import { Injectable, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import * as appStuff from "../store/app.state";
 import { Store } from "@ngrx/store";
+import * as PatientActions from "../store/patients.actions";
 const host = "https://java-super-health.herokuapp.com/patients/";
 @Injectable({ providedIn: "root" })
 //Handles all the patient api calls.
@@ -17,7 +18,9 @@ export class PatientsService implements OnInit {
    * Get all patients from backend
    */
   getPatientsApi() {
-    return this.httpClient.get<Patient[]>(host);
+    this.httpClient.get<Patient[]>(host).subscribe(response => {
+      this.store.dispatch(new PatientActions.GetPatients(response));
+    });
   }
   /**
    * Call api to add patient.
@@ -38,7 +41,9 @@ export class PatientsService implements OnInit {
    * @param id
    */
   getPatientApi(id: string) {
-    return this.httpClient.get(host + id);
+    this.httpClient.get(host + id).subscribe((response: Patient) => {
+      this.store.dispatch(new PatientActions.GetPatient(response));
+    });
   }
   /**
    * Call api to delete patient.
