@@ -5,10 +5,10 @@ import { PatientDetailComponent } from "../patient-detail/patient-detail.compone
 import { EditPatientComponent } from "../edit-patient/edit-patient.component";
 import { SharedModule } from "src/app/shared/shared.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { PatientsRoutingModule } from "../patients-routing.module";
 import { EncountersComponent } from "src/app/encounters/encounters.component";
-import { AdminGuard } from "src/app/auth/admin-guard.service";
+import { AuthInterceptor } from "src/app/shared/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -24,6 +24,9 @@ import { AdminGuard } from "src/app/auth/admin-guard.service";
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })
 export class PatientsModule {}

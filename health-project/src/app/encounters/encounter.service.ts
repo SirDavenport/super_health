@@ -19,14 +19,8 @@ export class EncounterService {
     Calls the backend passing a patientId and jwt
   */
   getEncountersByPatientApi(patientId: string) {
-    let token = null;
-    this.store.select("authStuff").subscribe(response => {
-      token = response.token;
-    });
     return this.httpClient
-      .get(host + "patient/" + patientId, {
-        headers: new HttpHeaders().set("jwt", token)
-      })
+      .get(host + "patient/" + patientId)
       .subscribe(response => {
         this.store.dispatch(new EncounterActions.GetEncounters(response));
       });
@@ -37,42 +31,22 @@ export class EncounterService {
    * @param id
    */
   getEncounterById(id: string) {
-    let token = null;
-    this.store.select("authStuff").subscribe(response => {
-      token = response.token;
+    return this.httpClient.get(host + id).subscribe(response => {
+      this.store.dispatch(new EncounterActions.GetEncounter(response));
     });
-    return this.httpClient
-      .get(host + id, {
-        headers: new HttpHeaders().set("jwt", token)
-      })
-      .subscribe(response => {
-        this.store.dispatch(new EncounterActions.GetEncounter(response));
-      });
   }
   /**
    * Calls backend to update an encounter.
    * @param encounter
    */
   updateEncounter(encounter: Encounter) {
-    let token = null;
-    this.store.select("authStuff").subscribe(response => {
-      token = response.token;
-    });
-    return this.httpClient.put(host + encounter.encounterId, encounter, {
-      headers: new HttpHeaders().set("jwt", token)
-    });
+    return this.httpClient.put(host + encounter.encounterId, encounter);
   }
   /**
    * Calls backend to add an encounter.
    * @param encounter
    */
   addEncounter(encounter: Encounter) {
-    let token = null;
-    this.store.select("authStuff").subscribe(response => {
-      token = response.token;
-    });
-    return this.httpClient.post(host, encounter, {
-      headers: new HttpHeaders().set("jwt", token)
-    });
+    return this.httpClient.post(host, encounter);
   }
 }

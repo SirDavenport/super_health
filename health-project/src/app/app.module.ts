@@ -9,9 +9,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CoreModule } from "./core/core.module";
 import { StoreModule } from "@ngrx/store";
-import { encounterReducer } from "./store/encounters.reducers";
-import { patientReducer } from "./store/patients.reducers";
-import { authReducer } from "./store/auth.reducers";
+import { reducers } from "./store/app.state";
 
 @NgModule({
   declarations: [AppComponent, SignupComponent, NotFoundComponent],
@@ -23,11 +21,7 @@ import { authReducer } from "./store/auth.reducers";
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    StoreModule.forRoot({
-      patientStuff: patientReducer,
-      encounterStuff: encounterReducer,
-      authStuff: authReducer
-    })
+    StoreModule.forRoot(reducers)
   ],
   bootstrap: [AppComponent]
 })
