@@ -26,10 +26,6 @@ export class HeaderComponent implements OnInit {
   }
   //Calls logout service from authService.
   onLogout() {
-    this.store.dispatch(new PatientActions.GetPatients(null));
-    this.store.dispatch(new PatientActions.GetPatient(null));
-    this.store.dispatch(new EncounterActions.GetEncounters(null));
-    this.store.dispatch(new EncounterActions.GetEncounters(null));
     this.store.dispatch(new AuthActions.Logout());
   }
 }

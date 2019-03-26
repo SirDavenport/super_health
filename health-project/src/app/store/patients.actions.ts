@@ -6,7 +6,7 @@ export const GET_PATIENT = "GET_PATIENT";
 
 export class GetPatients implements Action {
   readonly type = GET_PATIENTS;
-  constructor(public payload) {}
+  constructor(public payload: Patient[]) {}
 }
 export class GetPatient implements Action {
   readonly type = GET_PATIENT;
