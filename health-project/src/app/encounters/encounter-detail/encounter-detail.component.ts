@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { EncounterService } from "../encounter.service";
 import { Encounter } from "../encounter.model";
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import * as encounterStuff from "../store/encounters.reducers";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: "app-encounter-detail",
@@ -14,7 +16,8 @@ export class EncounterDetailComponent implements OnInit {
   constructor(
     private encounterService: EncounterService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private store: Store<encounterStuff.AppState>
   ) {}
 
   /*
@@ -25,11 +28,10 @@ export class EncounterDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params["encounterId"];
-      this.encounterService
-        .getEncounterById(this.id)
-        .subscribe((response: Encounter) => {
-          this.encounter = response;
-        });
+      this.encounterService.getEncounterById(this.id);
+      this.store.select("encounterStuff").subscribe(result => {
+        this.encounter = result.encounter;
+      });
     });
   }
   //Navigates back to patient-detail of the patient who's encounter we are trying to update.

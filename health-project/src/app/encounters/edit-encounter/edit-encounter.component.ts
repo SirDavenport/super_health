@@ -3,7 +3,9 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { EncounterService } from "../encounter.service";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Encounter } from "../encounter.model";
-
+import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
+import * as encounterStuff from "../store/encounters.reducers";
 @Component({
   selector: "app-edit-encounter",
   templateUrl: "./edit-encounter.component.html",
@@ -14,28 +16,15 @@ export class EditEncounterComponent implements OnInit {
   encounterForm: FormGroup;
   id: string;
   editMode = false;
-  encounter: Encounter = new Encounter(
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
-  );
+  encounterStore: Observable<{ encounter: Encounter }>;
   error: string;
   patientId: string;
+  encounter: Encounter;
   constructor(
     private encounterService: EncounterService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private store: Store<encounterStuff.AppState>
   ) {}
 
   //Subscribes to route params. Sets id to the param, encounterId.
@@ -50,15 +39,14 @@ export class EditEncounterComponent implements OnInit {
       this.id = params["encounterId"];
       this.patientId = params["patientId"];
       if (this.id != undefined) {
-        this.encounterService
-          .getEncounterById(this.id)
-          .subscribe((response: Encounter) => {
-            this.encounter = response;
-            this.initForm();
-          });
-        this.editMode = true;
+        this.encounterService.getEncounterById(this.id);
+        this.store.select("encounterStuff").subscribe(result => {
+          this.encounter = result.encounter;
+          this.editMode = true;
+          this.initForm();
+        });
       } else {
-        this.encounter["patientId"] = this.patientId;
+        //this.encounter["patientId"] = this.patientId;
         this.initForm();
       }
     });

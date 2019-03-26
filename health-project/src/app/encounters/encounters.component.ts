@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Encounter } from "./encounter.model";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { Subscription } from "rxjs";
 import { EncounterService } from "./encounter.service";
+import { Store } from "@ngrx/store";
+import * as encounterStuff from "./store/encounters.reducers";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-encounters",
@@ -10,7 +12,7 @@ import { EncounterService } from "./encounter.service";
   styleUrls: ["./encounters.component.css"]
 })
 export class EncountersComponent implements OnInit {
-  encounters: Encounter[];
+  encountersState: Observable<{ encounters: Encounter[] }>;
   patientId: string;
   filter = "";
   searchSelect = "visitCode";
@@ -23,7 +25,8 @@ export class EncountersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private encounterService: EncounterService
+    private encounterService: EncounterService,
+    private store: Store<encounterStuff.AppState>
   ) {}
 
   /**
@@ -36,11 +39,8 @@ export class EncountersComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.patientId = params["patientId"];
-      this.encounterService
-        .getEncountersByPatientApi(this.patientId)
-        .subscribe((response: Encounter[]) => {
-          this.encounters = response;
-        });
+      this.encounterService.getEncountersByPatientApi(this.patientId);
+      this.encountersState = this.store.select("encounterStuff");
     });
   }
 

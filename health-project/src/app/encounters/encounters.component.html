@@ -45,7 +45,8 @@
       <tbody>
         <tr
           *ngFor="
-            let encounter of (encounters | patientSearch: filter:searchSelect)
+            let encounter of ((encountersState | async).encounters
+              | patientSearch: filter:searchSelect)
           "
           style="cursor: pointer;"
           (click)="onRowClick(encounter.encounterId)"

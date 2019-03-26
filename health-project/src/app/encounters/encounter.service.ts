@@ -2,22 +2,30 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "../auth/auth.service";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Encounter } from "./encounter.model";
+import { Store } from "@ngrx/store";
+import * as EncounterActions from "./store/encounters.actions";
+import * as encounterStuff from "./store/encounters.reducers";
 const host = "https://java-super-health.herokuapp.com/encounters/";
 @Injectable({ providedIn: "root" })
 //Service for encounter api calls.
 export class EncounterService {
   constructor(
     private authService: AuthService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private store: Store<encounterStuff.AppState>
   ) {}
   /*
     Get Encounters by patient
     Calls the backend passing a patientId and jwt
   */
   getEncountersByPatientApi(patientId: string) {
-    return this.httpClient.get(host + "patient/" + patientId, {
-      headers: new HttpHeaders().set("jwt", this.authService.token)
-    });
+    return this.httpClient
+      .get(host + "patient/" + patientId, {
+        headers: new HttpHeaders().set("jwt", this.authService.token)
+      })
+      .subscribe(response => {
+        this.store.dispatch(new EncounterActions.GetEncounters(response));
+      });
   }
   /**
    * Calls backend to get an encounter by id.
@@ -25,9 +33,13 @@ export class EncounterService {
    * @param id
    */
   getEncounterById(id: string) {
-    return this.httpClient.get(host + id, {
-      headers: new HttpHeaders().set("jwt", this.authService.token)
-    });
+    return this.httpClient
+      .get(host + id, {
+        headers: new HttpHeaders().set("jwt", this.authService.token)
+      })
+      .subscribe(response => {
+        this.store.dispatch(new EncounterActions.GetEncounter(response));
+      });
   }
   /**
    * Calls backend to update an encounter.

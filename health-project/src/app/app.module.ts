@@ -8,6 +8,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CoreModule } from "./core/core.module";
+import { StoreModule } from "@ngrx/store";
+import { encounterReducer } from "./encounters/store/encounters.reducers";
 
 @NgModule({
   declarations: [AppComponent, SignupComponent, NotFoundComponent],
@@ -18,7 +20,8 @@ import { CoreModule } from "./core/core.module";
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreModule
+    CoreModule,
+    StoreModule.forRoot({ encounterStuff: encounterReducer })
   ],
   bootstrap: [AppComponent]
 })
