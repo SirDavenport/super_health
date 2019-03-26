@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { AuthService } from "src/app/auth/auth.service";
 import * as appStuff from "../../store/app.state";
 import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -12,6 +11,7 @@ import { Observable } from "rxjs";
 })
 export class LoginComponent implements OnInit {
   error: any;
+  submitClicked = false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -22,12 +22,16 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
   //calls login from authService
   onSubmit(form: NgForm) {
+    this.submitClicked = true;
     this.authService.login(form.value.email, form.value.password);
     this.store.select("authStuff").subscribe(response => {
+      this.error = "Loading...";
       if (response.token != null) {
         this.router.navigate(["patients"]);
+      } else {
+        this.error = response.authError;
+        this.submitClicked = false;
       }
-      this.error = response.authError;
     });
   }
 }

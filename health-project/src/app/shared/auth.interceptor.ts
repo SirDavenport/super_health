@@ -8,7 +8,7 @@ import {
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
 import * as appStuff from "../store/app.state";
-import { switchMap, map } from "rxjs/operators";
+import { switchMap, take } from "rxjs/operators";
 import * as fromAuth from "../store/auth.reducers";
 import { Injectable } from "@angular/core";
 
@@ -24,6 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return this.store.select("authStuff").pipe(
+      take(1),
       switchMap((authState: fromAuth.AuthState) => {
         const copiedReq = req.clone({
           headers: new HttpHeaders().set("jwt", authState.token)
