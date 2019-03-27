@@ -1,0 +1,21 @@
+<div class="container-fluid" *ngIf="user != undefined">
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <h1>User: {{ user.userName }}</h1>
+      <h5>Title: {{ user.title }}</h5>
+      <h5>Roles: {{ user.roles }}</h5>
+      <h5>Email: {{ user.email }}</h5>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-xs-6 col-xs-offset-3">
+      <button class="btn btn-warning" type="button" [routerLink]="['edit']">
+        Edit
+      </button>
+      <button class="btn btn-danger" type="button" (click)="onDelete()">
+        Delete
+      </button>
+    </div>
+  </div>
+  <hr />
+</div>

@@ -8,6 +8,14 @@
         <li routerLinkActive="active">
           <a routerLink="/patients">Patients</a>
         </li>
+        <li
+          routerLinkActive="active"
+          *ngIf="
+            authService.token != null && authService.roles.includes('ADMIN')
+          "
+        >
+          <a routerLink="/users">Users</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li routerLinkActive="active" *ngIf="authService.token == null">
