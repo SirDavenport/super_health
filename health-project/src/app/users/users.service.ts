@@ -23,8 +23,6 @@ export class UserService {
     return this.http.post(host, user);
   }
   updateUser(user: User) {
-    console.log(user.userId);
-
     return this.http.put(host + user.userId, user, {
       headers: new HttpHeaders().set("jwt", this.authService.token)
     });

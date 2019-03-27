@@ -13,7 +13,12 @@
       <button class="btn btn-warning" type="button" [routerLink]="['edit']">
         Edit
       </button>
-      <button class="btn btn-danger" type="button" (click)="onDelete()">
+      <button
+        *ngIf="!editingSelf"
+        class="btn btn-danger"
+        type="button"
+        (click)="onDelete()"
+      >
         Delete
       </button>
     </div>
