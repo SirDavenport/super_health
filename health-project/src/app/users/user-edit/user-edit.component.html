@@ -18,7 +18,11 @@
           <label for="email">Name</label>
           <input class="form-control" type="text" formControlName="email" />
         </div>
-        <div>
+        <div *ngIf="editingSelf" class="form-group">
+          <label for="password">Password</label>
+          <input class="form-control" type="text" formControlName="password" />
+        </div>
+        <div *ngIf="!editingSelf">
           <label for="">Roles</label>
           <div formArrayName="roles">
             <div *ngFor="let role of getControls(); let i = index" class="row">

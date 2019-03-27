@@ -8,6 +8,7 @@ import { tap } from "rxjs/operators";
 export class AuthService {
   token: string;
   roles: string[];
+  email: string;
   loginError = new Subject<any>();
   constructor(private httpClient: HttpClient, private router: Router) {}
 
@@ -24,6 +25,7 @@ export class AuthService {
         tap((response: string[]) => {
           this.token = response[0];
           this.roles = response;
+          this.email = email;
         })
       );
   }

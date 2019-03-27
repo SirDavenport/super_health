@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "../users.service";
 import { User } from "../user.model";
 import { ActivatedRoute, Params } from "@angular/router";
+import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
   selector: "app-user-detail",
@@ -11,9 +12,11 @@ import { ActivatedRoute, Params } from "@angular/router";
 export class UserDetailComponent implements OnInit {
   user: User;
   id: string;
+  editingSelf = false;
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -21,6 +24,11 @@ export class UserDetailComponent implements OnInit {
       this.id = params["userId"];
       this.userService.getUserById(this.id).subscribe((response: User) => {
         this.user = response;
+        if (this.authService.email === this.user.email) {
+          this.editingSelf = true;
+        } else {
+          this.editingSelf = false;
+        }
       });
     });
   }

@@ -5,6 +5,7 @@
       <h5>Title: {{ user.title }}</h5>
       <h5>Roles: {{ user.roles }}</h5>
       <h5>Email: {{ user.email }}</h5>
+      <h5 *ngIf="editingSelf">Password: {{ user.password }}</h5>
     </div>
   </div>
   <div class="row text-center">

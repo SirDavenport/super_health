@@ -3,6 +3,7 @@ import { UserService } from "../users.service";
 import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
 import { User } from "../user.model";
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
   selector: "app-user-edit",
@@ -14,10 +15,12 @@ export class UserEditComponent implements OnInit {
   user: User;
   error: string;
   id: string;
+  editingSelf = false;
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -25,6 +28,11 @@ export class UserEditComponent implements OnInit {
       this.id = params["userId"];
       this.userService.getUserById(this.id).subscribe((response: User) => {
         this.user = response;
+        if (this.authService.email === this.user.email) {
+          this.editingSelf = true;
+        } else {
+          this.editingSelf = false;
+        }
         this.initForm();
       });
     });
