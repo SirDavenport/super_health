@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../users.service";
 import { User } from "../user.model";
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
@@ -13,10 +13,12 @@ export class UserDetailComponent implements OnInit {
   user: User;
   id: string;
   editingSelf = false;
+  error: string[];
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -33,6 +35,12 @@ export class UserDetailComponent implements OnInit {
     });
   }
   onDelete() {
-    this.userService.deleteUser(this.id);
+    this.userService.deleteUser(this.id).subscribe((response: string[]) => {
+      if (response[0] === "Successfully deleted user") {
+        this.router.navigate(["/users"]);
+      } else {
+        this.error = response;
+      }
+    });
   }
 }

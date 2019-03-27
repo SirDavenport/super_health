@@ -1,4 +1,7 @@
 <div class="container-fluid" *ngIf="user != undefined">
+  <div *ngIf="error != null" class="row">
+    <h3>{{ error }}</h3>
+  </div>
   <div class="row">
     <div class="col-xs-12 text-center">
       <h1>User: {{ user.userName }}</h1>
