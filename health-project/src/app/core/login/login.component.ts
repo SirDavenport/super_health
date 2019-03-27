@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
   //calls login from authService
   onSubmit(form: NgForm) {
+    this.error = "Loading...";
     this.authService.login(form.value.email, form.value.password).subscribe(
       (response: string[]) => {
         if (response.length > 1) {
