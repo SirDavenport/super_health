@@ -8,7 +8,8 @@ import { NgModule } from "@angular/core";
 const encouterRoutes: Routes = [
   {
     path: "encounter-detail/:encounterId",
-    component: EncounterDetailComponent
+    component: EncounterDetailComponent,
+    canActivate: [EncounterGuard, AdminGuard]
   },
   {
     path: "encounter-detail/:encounterId/edit",
