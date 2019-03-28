@@ -1,7 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
-import { SignupComponent } from "./auth/signup/signup.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { EncountersModule } from "./encounters/encounters/encounters.module";
 import { AppRoutingModule } from "./app-routing.module";
@@ -10,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CoreModule } from "./core/core.module";
 
 @NgModule({
-  declarations: [AppComponent, SignupComponent, NotFoundComponent],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     EncountersModule,

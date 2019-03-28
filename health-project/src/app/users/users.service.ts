@@ -20,7 +20,9 @@ export class UserService {
     });
   }
   addUser(user: User) {
-    return this.http.post(host, user);
+    return this.http.post(host, user, {
+      headers: new HttpHeaders().set("jwt", this.authService.token)
+    });
   }
   updateUser(user: User) {
     return this.http.put(host + user.userId, user, {

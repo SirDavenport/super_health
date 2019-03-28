@@ -1,6 +1,7 @@
 <div class="container-fluid">
   <div class="row text-center">
-    <h1>Edit User</h1>
+    <h1 *ngIf="editMode">Edit User</h1>
+    <h1 *ngIf="!editMode">Create User</h1>
     <h3 *ngIf="error != null" style="color: red;">{{ error }}</h3>
   </div>
   <div class="row" *ngIf="userForm != null">
@@ -9,21 +10,66 @@
         <div class="form-group">
           <label for="userName">Name</label>
           <input class="form-control" type="text" formControlName="userName" />
+          <span
+            *ngIf="
+              userForm.controls['userName'].touched &&
+              userForm.controls['userName'].invalid
+            "
+            class="help-block"
+            style="color: red"
+            >Name must be a word or words</span
+          >
         </div>
         <div class="form-group">
           <label for="title">Title</label>
           <input class="form-control" type="text" formControlName="title" />
+          <span
+            *ngIf="
+              userForm.controls['title'].touched &&
+              userForm.controls['title'].invalid
+            "
+            class="help-block"
+            style="color: red"
+            >Title must be a word or words</span
+          >
         </div>
         <div class="form-group">
-          <label for="email">Name</label>
+          <label for="email">Email</label>
           <input class="form-control" type="text" formControlName="email" />
+          <span
+            *ngIf="
+              userForm.controls['email'].touched &&
+              userForm.controls['email'].invalid
+            "
+            class="help-block"
+            style="color: red"
+            >Email must be in email format</span
+          >
         </div>
-        <div *ngIf="editingSelf" class="form-group">
+        <div *ngIf="editingSelf || !editMode" class="form-group">
           <label for="password">Password</label>
           <input class="form-control" type="text" formControlName="password" />
+          <span
+            *ngIf="
+              userForm.controls['password'].touched &&
+              userForm.controls['password'].invalid
+            "
+            class="help-block"
+            style="color: red"
+            >Password must be at least 4 characters</span
+          >
         </div>
         <div *ngIf="!editingSelf">
           <label for="">Roles</label>
+          <span
+            *ngIf="
+              userForm.controls['roles'].touched &&
+              userForm.controls['roles'].invalid
+            "
+            class="help-block"
+            style="color: red"
+            >Role can be ADMIN or USER, all caps</span
+          >
           <div formArrayName="roles">
             <div *ngFor="let role of getControls(); let i = index" class="row">
               <div class="col-xs-8">
@@ -53,11 +99,20 @@
         <div class="row text-center">
           <div class="col-xs-12">
             <button
+              *ngIf="editMode"
               [disabled]="userForm.invalid"
               class="btn btn-success"
               type="submit"
             >
               Update
+            </button>
+            <button
+              *ngIf="!editMode"
+              [disabled]="userForm.invalid"
+              class="btn btn-success"
+              type="submit"
+            >
+              Create
             </button>
             <button routerLink="../" class="btn btn-warning" type="button">
               Cancel

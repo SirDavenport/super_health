@@ -16,6 +16,7 @@ export class UserEditComponent implements OnInit {
   error: string;
   id: string;
   editingSelf = false;
+  editMode = false;
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
@@ -26,48 +27,81 @@ export class UserEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = params["userId"];
-      this.userService.getUserById(this.id).subscribe((response: User) => {
-        this.user = response;
-        if (this.authService.email === this.user.email) {
-          this.editingSelf = true;
-        } else {
-          this.editingSelf = false;
-        }
+      if (this.id != null) {
+        this.editMode = true;
+        this.userService.getUserById(this.id).subscribe((response: User) => {
+          this.user = response;
+          if (this.authService.email === this.user.email) {
+            this.editingSelf = true;
+          } else {
+            this.editingSelf = false;
+          }
+          this.initForm();
+        });
+      } else {
+        this.editMode = false;
+        this.user = new User(null, null, null, null, null, null);
         this.initForm();
-      });
+      }
     });
   }
 
   private initForm() {
     let rolesArray = new FormArray([]);
-    for (let role of this.user.roles) {
-      rolesArray.push(
-        new FormControl(
-          role,
-          Validators.pattern(/^(?:admin|Admin|user|User)$/i)
-        )
-      );
+    if (this.id != null) {
+      for (let role of this.user.roles) {
+        rolesArray.push(
+          new FormControl(
+            role.toUpperCase(),
+            Validators.pattern(/^(?:admin|Admin|user|User)$/i)
+          )
+        );
+      }
     }
     this.userForm = new FormGroup({
       userId: new FormControl(this.user.userId),
-      userName: new FormControl(this.user.userName),
-      title: new FormControl(this.user.title),
+      userName: new FormControl(this.user.userName, [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z\s.,/":;]*$/)
+      ]),
+      title: new FormControl(this.user.title, [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z\s.,/":;]*$/)
+      ]),
       roles: rolesArray,
-      email: new FormControl(this.user.email),
-      password: new FormControl(this.user.password)
+      email: new FormControl(this.user.email, [
+        Validators.required,
+        Validators.pattern(/\S+@\S+\.\S+/)
+      ]),
+      password: new FormControl(this.user.password, [
+        Validators.required,
+        Validators.pattern(/^[A-Za-z0-9!@#$%]{2,30}$/)
+      ])
     });
   }
 
   onSubmit() {
-    this.userService
-      .updateUser(this.userForm.value)
-      .subscribe((response: string[]) => {
-        if (response[0] === "Successfully updated user") {
-          this.router.navigate(["../"], { relativeTo: this.route });
-        } else {
-          this.error = response.join(", ");
-        }
-      });
+    if (this.editMode) {
+      this.userService
+        .updateUser(this.userForm.value)
+        .subscribe((response: string[]) => {
+          if (response[0] === "Successfully updated user") {
+            this.router.navigate(["../"], { relativeTo: this.route });
+          } else {
+            this.error = response.join(", ");
+          }
+        });
+    } else {
+      this.userService
+        .addUser(this.userForm.value)
+        .subscribe((response: string[]) => {
+          if (response[0] === "Successfully added new user") {
+            this.router.navigate(["users"]);
+          } else {
+            this.error = response.join(", ");
+          }
+        });
+    }
   }
   getControls() {
     return (<FormArray>this.userForm.get("roles")).controls;
@@ -75,7 +109,10 @@ export class UserEditComponent implements OnInit {
 
   onAddRole() {
     (<FormArray>this.userForm.get("roles")).push(
-      new FormControl(null, Validators.pattern(/^(?:admin|Admin|user|User)$/i))
+      new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^(?:ADMIN|USER)$/)
+      ])
     );
   }
 
