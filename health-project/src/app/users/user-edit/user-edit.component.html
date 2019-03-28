@@ -48,7 +48,11 @@
         </div>
         <div *ngIf="editingSelf || !editMode" class="form-group">
           <label for="password">Password</label>
-          <input class="form-control" type="text" formControlName="password" />
+          <input
+            class="form-control"
+            type="password"
+            formControlName="password"
+          />
           <span
             *ngIf="
               userForm.controls['password'].touched &&
@@ -56,7 +60,23 @@
             "
             class="help-block"
             style="color: red"
-            >Password must be at least 4 characters</span
+            >Password must be at least 5 characters</span
+          >
+          <label for="pCheck">Retype Password</label>
+          <input
+            class="form-control"
+            type="password"
+            formControlName="pCheck"
+          />
+          <span
+            *ngIf="
+              userForm.controls['password'].valid &&
+              userForm.errors &&
+              userForm.errors.pMatch
+            "
+            class="help-block"
+            style="color: red"
+            >Passwords do not match</span
           >
         </div>
         <div *ngIf="!editingSelf">

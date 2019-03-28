@@ -13,6 +13,7 @@ export class UserDetailComponent implements OnInit {
   user: User;
   id: string;
   editingSelf = false;
+  viewPassword = false;
   error: string[];
   constructor(
     private userService: UserService,

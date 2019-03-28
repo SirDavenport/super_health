@@ -8,12 +8,21 @@
       <h5>Title: {{ user.title }}</h5>
       <h5>Roles: {{ user.roles }}</h5>
       <h5>Email: {{ user.email }}</h5>
-      <h5 *ngIf="editingSelf">Password: {{ user.password }}</h5>
+      <div *ngIf="editingSelf">
+        <button
+          class="btn btn-warning"
+          (click)="viewPassword = !viewPassword"
+          type="button"
+        >
+          View Password
+        </button>
+        <h5 *ngIf="viewPassword">Password: {{ user.password }}</h5>
+      </div>
     </div>
   </div>
   <div class="row text-center">
     <div class="col-xs-6 col-xs-offset-3">
-      <button class="btn btn-warning" type="button" [routerLink]="['edit']">
+      <button class="btn btn-primary" type="button" [routerLink]="['edit']">
         Edit
       </button>
       <button

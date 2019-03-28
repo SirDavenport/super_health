@@ -1,6 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../users.service";
-import { FormGroup, FormControl, FormArray, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  FormControl,
+  FormArray,
+  Validators,
+  AbstractControl
+} from "@angular/forms";
 import { User } from "../user.model";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { AuthService } from "src/app/auth/auth.service";
@@ -37,11 +43,13 @@ export class UserEditComponent implements OnInit {
             this.editingSelf = false;
           }
           this.initForm();
+          this.userForm.setValidators(this.validatePassword);
         });
       } else {
         this.editMode = false;
         this.user = new User(null, null, null, null, null, null);
         this.initForm();
+        this.userForm.setValidators(this.validatePassword);
       }
     });
   }
@@ -75,8 +83,9 @@ export class UserEditComponent implements OnInit {
       ]),
       password: new FormControl(this.user.password, [
         Validators.required,
-        Validators.pattern(/^[A-Za-z0-9!@#$%]{2,30}$/)
-      ])
+        Validators.pattern(/^[A-Za-z0-9!@#$%]{5,30}$/)
+      ]),
+      pCheck: new FormControl(this.user.password, [Validators.required])
     });
   }
 
@@ -107,6 +116,11 @@ export class UserEditComponent implements OnInit {
     return (<FormArray>this.userForm.get("roles")).controls;
   }
 
+  validatePassword(control: AbstractControl) {
+    return control.value.pCheck === control.get("password").value
+      ? null
+      : { pMatch: true };
+  }
   onAddRole() {
     (<FormArray>this.userForm.get("roles")).push(
       new FormControl(null, [
